@@ -13,8 +13,8 @@
 import("//build/ohos.gni")
 import("//build/ohos/kernel/kernel.gni")
 
-XR829_ETC_DIR="//device/soc/allwinner/t507/hardware/wifi/xr829/etc"
-XR829_BIN_DIR="//device/soc/allwinner/t507/hardware/wifi/xr829/bin"
+XR829_ETC_DIR = "//device/soc/allwinner/t507/hardware/wifi/xr829/etc"
+XR829_BIN_DIR = "//device/soc/allwinner/t507/hardware/wifi/xr829/bin"
 
 if (linux_kernel_version == "linux-4.19") {
   ohos_prebuilt_etc("boot_xr829_bin") {
@@ -90,11 +90,11 @@ ohos_prebuilt_etc("p2p_supplicant.conf") {
 
 group("xr829") {
   deps = [
-    ":wpa_supplicant.conf",
-    ":p2p_supplicant.conf",
     ":boot_xr829_bin",
     ":etf_xr829_bin",
     ":fw_xr829_bin",
+    ":p2p_supplicant.conf",
     ":sdd_xr829_bin",
+    ":wpa_supplicant.conf",
   ]
 }

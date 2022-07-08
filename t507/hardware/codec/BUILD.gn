@@ -13,8 +13,8 @@
 import("//build/ohos.gni")
 import("//build/ohos/kernel/kernel.gni")
 
-CODEC_ETC_DIR="//device/soc/allwinner/t507/hardware/codec/media/etc"
-CODEC_LIB_DIR="//device/soc/allwinner/t507/hardware/codec/media/lib"
+CODEC_ETC_DIR = "//device/soc/allwinner/t507/hardware/codec/media/etc"
+CODEC_LIB_DIR = "//device/soc/allwinner/t507/hardware/codec/media/lib"
 
 if (linux_kernel_version == "linux-5.10") {
   ohos_prebuilt_etc("OmxCore") {
@@ -55,10 +55,10 @@ ohos_prebuilt_etc("cedarc.conf") {
 
 group("codec") {
   deps = [
-    ":cedarc.conf",
-    ":OmxCore",
     ":OMX_Pluginhw",
+    ":OmxCore",
     ":OmxVdec",
     ":OmxVenc",
+    ":cedarc.conf",
   ]
 }

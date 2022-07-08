@@ -140,4 +140,3 @@ group("display_layer") {
     ":display_gralloc",
   ]
 }
-
