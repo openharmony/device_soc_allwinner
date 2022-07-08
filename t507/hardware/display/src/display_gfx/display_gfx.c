@@ -131,7 +131,7 @@ RgaSURF_FORMAT colorSpaceModeChange(PixelFormat color, uint8_t *isYuv)
             rkFormat = RK_FORMAT_VYUY_422;
             *isYuv = 1;
             break;
-    default:
+        default:
 //          PIXEL_FMT_CLUT8:        /**< CLUT8 format */
 //          PIXEL_FMT_CLUT1,            /**< CLUT1 format */
 //          PIXEL_FMT_CLUT4,            /**< CLUT4 format */
@@ -178,7 +178,7 @@ int32_t rkFillRect(ISurface *iSurface, IRect *rect, uint32_t color, GfxOpt *opt)
         DISPLAY_LOGE("source iSurface address error");
         return DISPLAY_PARAM_ERR;
     }
-    DISPLAY_LOGE("gfx vir %{public}p phy 0x%{public}x fd %{public}d",dst.vir_addr, (int32_t)dst.phy_addr, dst.fd);
+    DISPLAY_LOGE("gfx vir %{public}p phy 0x%{public}x fd %{public}d", dst.vir_addr, (int32_t)dst.phy_addr, dst.fd);
     dst.width = iSurface->width;
     dst.height = iSurface->height;
     dst.wstride = ALIGN_UP(iSurface->width, 16);
@@ -189,7 +189,6 @@ int32_t rkFillRect(ISurface *iSurface, IRect *rect, uint32_t color, GfxOpt *opt)
     if (opt->enGlobalAlpha)
         dst.global_alpha = opt->globalAlpha;
     ret = imfill(dst, imRect, color);
-
     if (ret != IM_STATUS_SUCCESS)
         return DISPLAY_FAILURE;
     else
@@ -228,7 +227,7 @@ int32_t blendTypeChange(BlendType blendType)
 //        BLEND_AKS:              /**< AKS blending */
 //        BLEND_AKD:              /**< AKD blending */
 //        BLEND_BUTT:              /**< Null operation */
-          rkBlendType = IM_STATUS_NOT_SUPPORTED;
+            rkBlendType = IM_STATUS_NOT_SUPPORTED;
             break;
     }
     return rkBlendType;
@@ -237,7 +236,7 @@ int32_t blendTypeChange(BlendType blendType)
 int32_t TransformTypeChange(TransformType type)
 {
     int32_t rkRotateType;
-    switch(type) {
+    switch (type) {
         case ROTATE_90:            /**< Rotation by 90 degrees */
             rkRotateType = IM_HAL_TRANSFORM_ROT_90;
             break;
@@ -384,8 +383,8 @@ int32_t doFlit(ISurface *srcSurface, IRect *srcRect, ISurface *dstSurface, IRect
             usage |= rkMirrorType;
     }
     if (opt->enableScale) {
-        DISPLAY_LOGE("gfx scale from (%{puhblic}d, %{public}d) to (%{public}d, %{public}d)", srcRgaBuffer.width, srcRgaBuffer.height, dstRgaBuffer.width,
-                     dstRgaBuffer.height);
+        DISPLAY_LOGE("gfx scale from (%{puhblic}d, %{public}d) to (%{public}d, %{public}d)", srcRgaBuffer.width, 
+                     srcRgaBuffer.height, dstRgaBuffer.width, dstRgaBuffer.height);
     }
     usage |= IM_SYNC;
     if (isYuv == 1) {
@@ -494,7 +493,7 @@ int32_t GfxInitialize(GfxFuncs **funcs)
     if (eok != EOK) {
         DISPLAY_LOGE("memset_s failed");
         free(gfxFuncs);
-	return false;
+    return false;
     }
     gfxFuncs->InitGfx = rkInitGfx;
     gfxFuncs->DeinitGfx = rkDeinitGfx;

@@ -68,7 +68,6 @@ typedef enum {
     IM_NN_QUANTIZE              = 1 << 23,
     IM_ROP                      = 1 << 24,
     IM_ALPHA_BLEND_PRE_MUL      = 1 << 25,
-
 } IM_USAGE;
 
 typedef enum {
@@ -190,7 +189,7 @@ typedef enum {
     RGA_ALL,
 } IM_INFORMATION;
 
-/*rga version index*/
+/* rga version index */
 typedef enum {
     RGA_V_ERR                  = 0x0,
     RGA_1                      = 0x1,
@@ -200,8 +199,6 @@ typedef enum {
     RGA_2_LITE1                = 0x5,
     RGA_2_ENHANCE              = 0x6,
 } RGA_VERSION_NUM;
-
-//struct AHardwareBuffer AHardwareBuffer;
 
 typedef struct {
     RGA_VERSION_NUM version;
@@ -266,7 +263,7 @@ typedef struct {
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             err = imStrError_t(IM_STATUS_INVALID_PARAM); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             err = imStrError_t((IM_STATUS)args[0]); \
         } else { \
             err = ("Fatal error, imStrError() too many parameters\n"); \
@@ -286,7 +283,7 @@ IM_API const char* imStrError_t(IM_STATUS status);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             buffer = wrapbuffer_virtualaddr_t(vir_addr, width, height, width, height, format); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             buffer = wrapbuffer_virtualaddr_t(vir_addr, width, height, args[0], args[1], format); \
         } else { \
             printf("invalid parameter\n"); \
@@ -301,7 +298,7 @@ IM_API const char* imStrError_t(IM_STATUS status);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             buffer = wrapbuffer_physicaladdr_t(phy_addr, width, height, width, height, format); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             buffer = wrapbuffer_physicaladdr_t(phy_addr, width, height, args[0], args[1], format); \
         } else { \
             printf("invalid parameter\n"); \
@@ -316,7 +313,7 @@ IM_API const char* imStrError_t(IM_STATUS status);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             buffer = wrapbuffer_fd_t(fd, width, height, width, height, format); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             buffer = wrapbuffer_fd_t(fd, width, height, args[0], args[1], format); \
         } else { \
             printf("invalid parameter\n"); \
@@ -325,7 +322,8 @@ IM_API const char* imStrError_t(IM_STATUS status);
     })
 
 IM_API rga_buffer_t wrapbuffer_virtualaddr_t(void* vir_addr, int width, int height, int wstride, int hstride, int format);
-IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height, int wstride, int hstride, int format);
+IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height, 
+                                              int wstride, int hstride, int format);
 IM_API rga_buffer_t wrapbuffer_fd_t(int fd, int width, int height, int wstride, int hstride, int format);
 
 /*
@@ -343,7 +341,6 @@ IM_API rga_buffer_t wrapbuffer_fd_t(int fd, int width, int height, int wstride, 
  *
  * @returns a usage describing properties of RGA.
  */
-//IM_API int rga_get_info(rga_info_table_entry *);
 IM_API IM_STATUS rga_get_info(rga_info_table_entry *return_table);
 
 /*
@@ -385,7 +382,7 @@ IM_API const char* querystring(int name);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imcheck_t(src, dst, pat, src_rect, dst_rect, pat_rect, 0); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imcheck_t(src, dst, pat, src_rect, dst_rect, pat_rect, args[0]); \
         } else { \
             ret = IM_STATUS_FAILED; \
@@ -400,7 +397,7 @@ IM_API const char* querystring(int name);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imcheck_t(src, dst, pat, src_rect, dst_rect, pat_rect, 0); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imcheck_t(src, dst, pat, src_rect, dst_rect, pat_rect, args[0]); \
         } else { \
             ret = IM_STATUS_FAILED; \
@@ -409,7 +406,8 @@ IM_API const char* querystring(int name);
         ret; \
     })
 IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const rga_buffer_t pat,
-                           const im_rect src_rect, const im_rect dst_rect, const im_rect pat_rect, const int mdoe_usage);
+                           const im_rect src_rect, const im_rect dst_rect, 
+                           const im_rect pat_rect, const int mdoe_usage);
 
 /*
  * Resize
@@ -431,11 +429,11 @@ IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const
         int argc = sizeof(args)/sizeof(double); \
         if (argc == 0) { \
             ret = imresize_t(src, dst, 0, 0, INTER_LINEAR, 1); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             ret = imresize_t(src, dst, args[0], args[1], INTER_LINEAR, 1); \
-        } else if (argc == 3){ \
+        } else if (argc == 3) { \
             ret = imresize_t(src, dst, args[0], args[1], (int)args[2], 1); \
-        } else if (argc == 4){ \
+        } else if (argc == 4) { \
             ret = imresize_t(src, dst, args[0], args[1], (int)args[2], (int)args[3]); \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -447,11 +445,12 @@ IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const
 #define impyramid(src, dst, direction) \
         imresize_t(src, \
                    dst, \
-                   direction == IM_UP_SCALE ? 0.5 : 2, \
-                   direction == IM_UP_SCALE ? 0.5 : 2, \
+                   direction == IM_UP_SCALE ? (0.5) : (2), \
+                   direction == IM_UP_SCALE ? (0.5) : (2), \
                    INTER_LINEAR, 1)
 
-IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx, double fy, int interpolation, int sync);
+IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx,
+                            double fy, int interpolation, int sync);
 
 /*
  * Crop
@@ -471,7 +470,7 @@ IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx,
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imcrop_t(src, dst, rect, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imcrop_t(src, dst, rect, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -503,7 +502,7 @@ IM_API IM_STATUS imcrop_t(const rga_buffer_t src, rga_buffer_t dst, im_rect rect
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imrotate_t(src, dst, rotation, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imrotate_t(src, dst, rotation, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -534,7 +533,7 @@ IM_API IM_STATUS imrotate_t(const rga_buffer_t src, rga_buffer_t dst, int rotati
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imflip_t(src, dst, mode, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imflip_t(src, dst, mode, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -564,7 +563,7 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imfill_t(buf, rect, color, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imfill_t(buf, rect, color, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -580,7 +579,7 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imfill_t(buf, rect, color, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imfill_t(buf, rect, color, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -596,7 +595,7 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imfill_t(buf, rect, color, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imfill_t(buf, rect, color, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -624,7 +623,7 @@ IM_API IM_STATUS imfill_t(rga_buffer_t dst, im_rect rect, int color, int sync);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = impalette_t(src, dst, lut, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = impalette_t(src, dst, lut, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -653,7 +652,7 @@ IM_API IM_STATUS impalette_t(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t lu
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imtranslate_t(src, dst, x, y, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imtranslate_t(src, dst, x, y, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -680,7 +679,7 @@ IM_API IM_STATUS imtranslate_t(const rga_buffer_t src, rga_buffer_t dst, int x, 
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imcopy_t(src, dst, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imcopy_t(src, dst, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -713,9 +712,9 @@ IM_API IM_STATUS imcopy_t(const rga_buffer_t src, rga_buffer_t dst, int sync);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imblend_t(srcA, srcB, dst, IM_ALPHA_BLEND_SRC_OVER, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imblend_t(srcA, srcB, dst, args[0], 1); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             ret = imblend_t(srcA, srcB, dst, args[0], args[1]); \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -730,9 +729,9 @@ IM_API IM_STATUS imcopy_t(const rga_buffer_t src, rga_buffer_t dst, int sync);
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imblend_t(srcA, srcB, dst, IM_ALPHA_BLEND_SRC_OVER, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imblend_t(srcA, srcB, dst, args[0], 1); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             ret = imblend_t(srcA, srcB, dst, args[0], args[1]); \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -762,9 +761,9 @@ IM_API IM_STATUS imblend_t(const rga_buffer_t srcA, const rga_buffer_t srcB, rga
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imcolorkey_t(src, dst, range, IM_ALPHA_COLORKEY_NORMAL, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imcolorkey_t(src, dst, range, args[0], 1); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             ret = imcolorkey_t(src, dst, range, args[0], args[1]); \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -795,9 +794,9 @@ IM_API IM_STATUS imcolorkey_t(const rga_buffer_t src, rga_buffer_t dst, im_color
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imcvtcolor_t(src, dst, sfmt, dfmt, IM_COLOR_SPACE_DEFAULT, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imcvtcolor_t(src, dst, sfmt, dfmt, args[0], 1); \
-        } else if (argc == 2){ \
+        } else if (argc == 2) { \
             ret = imcvtcolor_t(src, dst, sfmt, dfmt, args[0], args[1]); \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -826,7 +825,7 @@ IM_API IM_STATUS imcvtcolor_t(rga_buffer_t src, rga_buffer_t dst, int sfmt, int 
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imquantize_t(src, dst, nn_info, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imquantize_t(src, dst, nn_info, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -855,7 +854,7 @@ IM_API IM_STATUS imquantize_t(const rga_buffer_t src, rga_buffer_t dst, im_nn_t 
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
             ret = imrop_t(src, dst, rop_code, 1); \
-        } else if (argc == 1){ \
+        } else if (argc == 1) { \
             ret = imrop_t(src, dst, rop_code, args[0]);; \
         } else { \
             ret = IM_STATUS_INVALID_PARAM; \
@@ -876,7 +875,8 @@ IM_API IM_STATUS imrop_t(const rga_buffer_t src, rga_buffer_t dst, int rop_code,
  *
  * @returns success or else negative error code.
  */
-IM_API IM_STATUS improcess(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t pat, im_rect srect, im_rect drect, im_rect prect, int usage);
+IM_API IM_STATUS improcess(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t pat,
+                           im_rect srect, im_rect drect, im_rect prect, int usage);
 
 /*
  * block until all execution is complete

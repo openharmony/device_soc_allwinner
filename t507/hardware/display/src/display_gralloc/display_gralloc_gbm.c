@@ -47,7 +47,7 @@ typedef struct {
     const char *str;
 } ValueStrMap;
 
-static GrallocManager *GetGrallocManager()
+static GrallocManager *GetGrallocManager(void)
 {
     if (g_grallocManager == NULL) {
         g_grallocManager = (GrallocManager *)malloc(sizeof(GrallocManager));
@@ -254,81 +254,77 @@ static int32_t DmaBufferSync(const BufferHandle *handle, bool start)
 
 static void InitBufferHandle(struct gbm_bo *bo, int fd, const AllocInfo *info, PriBufferHandle *buffer)
 {
-	BufferHandle *bufferHandle = &(buffer->hdl);
-	bufferHandle->fd = fd;
-	bufferHandle->reserveFds = GRALLOC_PRIV_NUM_FDS;
-	bufferHandle->reserveInts = GRALLOC_PRIV_NUM_INTS;
-	bufferHandle->stride = hdi_gbm_bo_get_stride(bo);
-	bufferHandle->width = info->width;
-	bufferHandle->height = info->height;
-	bufferHandle->usage = info->usage;
-	bufferHandle->format = info->format;
-	bufferHandle->virAddr = NULL;
-	bufferHandle->size = hdi_gbm_bo_get_stride(bo) * hdi_gbm_bo_get_height(bo);
-	switch(info->format)
-	{
-		case PIXEL_FMT_YCBCR_420_SP:
-		case PIXEL_FMT_YCRCB_420_SP:
-			buffer->plan_num = 2;
-			buffer->yuv_info = AW_YUV_NO_INFO;
-			buffer->plane_info[0].alloc_height = hdi_gbm_bo_get_height(bo);
-			buffer->plane_info[0].alloc_width = hdi_gbm_bo_get_width(bo);
-			buffer->plane_info[0].byte_stride = hdi_gbm_bo_get_width(bo);
-			buffer->plane_info[0].offset = 0;
-			buffer->plane_info[1].alloc_height = buffer->plane_info[0].alloc_height/2;
-			buffer->plane_info[1].alloc_width = buffer->plane_info[0].alloc_width/2;
-			buffer->plane_info[1].byte_stride = buffer->plane_info[0].byte_stride;
-			buffer->plane_info[1].offset = buffer->plane_info[0].byte_stride * buffer->plane_info[0].alloc_height;
+    BufferHandle *bufferHandle = &(buffer->hdl);
+    bufferHandle->fd = fd;
+    bufferHandle->reserveFds = GRALLOC_PRIV_NUM_FDS;
+    bufferHandle->reserveInts = GRALLOC_PRIV_NUM_INTS;
+    bufferHandle->stride = hdi_gbm_bo_get_stride(bo);
+    bufferHandle->width = info->width;
+    bufferHandle->height = info->height;
+    bufferHandle->usage = info->usage;
+    bufferHandle->format = info->format;
+    bufferHandle->virAddr = NULL;
+    bufferHandle->size = hdi_gbm_bo_get_stride(bo) * hdi_gbm_bo_get_height(bo);
+    switch (info->format) {
+        case PIXEL_FMT_YCBCR_420_SP:
+        case PIXEL_FMT_YCRCB_420_SP:
+            buffer->plan_num = 2;    // plan_num is 2
+            buffer->yuv_info = AW_YUV_NO_INFO;
+            buffer->plane_info[0].alloc_height = hdi_gbm_bo_get_height(bo);
+            buffer->plane_info[0].alloc_width = hdi_gbm_bo_get_width(bo);
+            buffer->plane_info[0].byte_stride = hdi_gbm_bo_get_width(bo);
+            buffer->plane_info[0].offset = 0;
+            buffer->plane_info[1].alloc_height = buffer->plane_info[0].alloc_height/2;  // alloc_height/2
+            buffer->plane_info[1].alloc_width = buffer->plane_info[0].alloc_width/2;   // alloc_height/2
+            buffer->plane_info[1].byte_stride = buffer->plane_info[0].byte_stride;
+            buffer->plane_info[1].offset = buffer->plane_info[0].byte_stride * buffer->plane_info[0].alloc_height;
 
-		break;
-		case PIXEL_FMT_YCBCR_422_SP:
-		case PIXEL_FMT_YCRCB_422_SP:
-			
-		break;
-		case	PIXEL_FMT_YCBCR_420_P:
-		case	PIXEL_FMT_YCRCB_420_P:
-			buffer->plan_num = 3;
-			buffer->yuv_info = AW_YUV_NO_INFO;
-			buffer->plane_info[0].alloc_height = hdi_gbm_bo_get_height(bo);
-			buffer->plane_info[0].alloc_width = hdi_gbm_bo_get_width(bo);
-			buffer->plane_info[0].byte_stride = hdi_gbm_bo_get_width(bo);
-			buffer->plane_info[0].offset = 0;
-			buffer->plane_info[1].alloc_height = buffer->plane_info[0].alloc_height/2;
-			buffer->plane_info[1].alloc_width = buffer->plane_info[0].alloc_width/2;
-			buffer->plane_info[1].byte_stride = buffer->plane_info[0].byte_stride/2;
-			buffer->plane_info[1].offset = buffer->plane_info[0].byte_stride * buffer->plane_info[0].alloc_height;
-			buffer->plane_info[2].alloc_height = buffer->plane_info[0].alloc_height/2;
-			buffer->plane_info[2].alloc_width = buffer->plane_info[0].alloc_width/2;
-			buffer->plane_info[2].byte_stride = buffer->plane_info[0].byte_stride/2;
-			buffer->plane_info[2].offset = buffer->plane_info[1].offset
-									+ buffer->plane_info[1].byte_stride * buffer->plane_info[1].alloc_height;
+        break;
+        case PIXEL_FMT_YCBCR_422_SP:
+        case PIXEL_FMT_YCRCB_422_SP:
 
-		break;
-		case	PIXEL_FMT_YCBCR_422_P:
-		case	PIXEL_FMT_YCRCB_422_P:
+        break;
+        case    PIXEL_FMT_YCBCR_420_P:
+        case    PIXEL_FMT_YCRCB_420_P:
+            buffer->plan_num = 3;    // plan_num is 3
+            buffer->yuv_info = AW_YUV_NO_INFO;
+            buffer->plane_info[0].alloc_height = hdi_gbm_bo_get_height(bo);
+            buffer->plane_info[0].alloc_width = hdi_gbm_bo_get_width(bo);
+            buffer->plane_info[0].byte_stride = hdi_gbm_bo_get_width(bo);
+            buffer->plane_info[0].offset = 0;
+            buffer->plane_info[1].alloc_height = buffer->plane_info[0].alloc_height/2;   // alloc_height/2
+            buffer->plane_info[1].alloc_width = buffer->plane_info[0].alloc_width/2;    // alloc_width/2
+            buffer->plane_info[1].byte_stride = buffer->plane_info[0].byte_stride/2;    // byte_stride/2
+            buffer->plane_info[1].offset = buffer->plane_info[0].byte_stride * buffer->plane_info[0].alloc_height;
+            buffer->plane_info[2].alloc_height = buffer->plane_info[0].alloc_height/2;   // alloc_height/2
+            buffer->plane_info[2].alloc_width = buffer->plane_info[0].alloc_width/2;   // alloc_width/2
+            buffer->plane_info[2].byte_stride = buffer->plane_info[0].byte_stride/2;   // byte_stride/2
+            buffer->plane_info[2].offset = buffer->plane_info[1].offset
+                                    + buffer->plane_info[1].byte_stride * buffer->plane_info[1].alloc_height;  // plane_info[1].alloc_height
 
-		break;
-		default:
-			buffer->plan_num = 1;
-			buffer->yuv_info = AW_YUV_NO_INFO;
-			buffer->plane_info[0].alloc_height = hdi_gbm_bo_get_height(bo);
-			buffer->plane_info[0].alloc_width = hdi_gbm_bo_get_width(bo);
-			buffer->plane_info[0].byte_stride = hdi_gbm_bo_get_stride(bo);
-			buffer->plane_info[0].offset = 0;
-	}
+        break;
+        case    PIXEL_FMT_YCBCR_422_P:
+        case    PIXEL_FMT_YCRCB_422_P:
 
-    
+        break;
+        default:
+            buffer->plan_num = 1;
+            buffer->yuv_info = AW_YUV_NO_INFO;
+            buffer->plane_info[0].alloc_height = hdi_gbm_bo_get_height(bo);
+            buffer->plane_info[0].alloc_width = hdi_gbm_bo_get_width(bo);
+            buffer->plane_info[0].byte_stride = hdi_gbm_bo_get_stride(bo);
+            buffer->plane_info[0].offset = 0;
+    }
 }
 
 int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
 {
-	
     DISPLAY_CHK_RETURN((info == NULL), DISPLAY_NULL_PTR, DISPLAY_LOGE("info is null"));
     DISPLAY_CHK_RETURN((buffer == NULL), DISPLAY_NULL_PTR, DISPLAY_LOGE("buffer is null"));
     PriBufferHandle *priBuffer = NULL;
     uint32_t drmFmt = ConvertFormatToDrm(info->format);
     DISPLAY_CHK_RETURN((drmFmt == INVALID_PIXEL_FMT), DISPLAY_NOT_SUPPORT,
-   				 DISPLAY_LOGE("format %{public}d can not support", info->format));
+                DISPLAY_LOGE("format %{public}d can not support", info->format));
 
     GRALLOC_LOCK();
     GrallocManager *grallocManager = GetGrallocManager();
@@ -348,9 +344,10 @@ int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
     DISPLAY_CHK_RETURN((eok != EOK), DISPLAY_PARAM_ERR, DISPLAY_LOGE("memset_s failed"); goto error);
 
     InitBufferHandle(bo, fd, info, priBuffer);
-	priBuffer->id = global_id++;
-    DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d, drmformat %{public}d, format %{public}d buffer id:%{public}llu",
-    info->width, info->height, drmFmt, info->format, priBuffer->id);
+    priBuffer->id = global_id++;
+    DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d, 
+                 drmformat %{public}d, format %{public}d buffer id:%{public}llu",
+                 info->width, info->height, drmFmt, info->format, priBuffer->id);
 
     priBuffer->hdl.phyAddr = 0;
     *buffer = &priBuffer->hdl;
@@ -474,8 +471,8 @@ int32_t GbmGrallocInitialize(void)
     int ret = InitGbmDevice(g_drmFileNode, grallocManager);
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), ret, DISPLAY_LOGE("gralloc manager failed"); GRALLOC_UNLOCK());
     grallocManager->referCount++;
-	int32_t pid = getpid();
-	global_id = ((uint64_t)(pid))<<32;
+    int32_t pid = getpid();
+    global_id = ((uint64_t)(pid))<<32;  // (pid))<<32
     GRALLOC_UNLOCK();
     return DISPLAY_SUCCESS;
 }

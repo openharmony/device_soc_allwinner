@@ -21,12 +21,12 @@
 extern "C" {
 #endif
 
-enum{
-	AW_YUV_NO_INFO,
-	AW_YUV_BT601_NARROW,
-	AW_YUV_BT601_WIDE,
-	AW_YUV_BT709_NARROW,
-	AW_YUV_BT709_WIDE
+enum {
+    AW_YUV_NO_INFO,
+    AW_YUV_BT601_NARROW,
+    AW_YUV_BT601_WIDE,
+    AW_YUV_BT709_NARROW,
+    AW_YUV_BT709_WIDE
 };
 
 typedef struct {
@@ -48,8 +48,8 @@ void *GbmMmap(BufferHandle *buffer);
 int32_t GbmUnmap(BufferHandle *buffer);
 int32_t GbmInvalidateCache(BufferHandle *buffer);
 int32_t GbmFlushCache(BufferHandle *buffer);
-int32_t GbmGrallocUninitialize();
-int32_t GbmGrallocInitialize();
+int32_t GbmGrallocUninitialize(void);
+int32_t GbmGrallocInitialize(void);
 
 #ifdef GRALLOC_LOCK_DEBUG
 #define GRALLOC_LOCK(format, ...)                                                                                    \

@@ -32,7 +32,8 @@ HdiLayerBuffer::HdiLayerBuffer(const BufferHandle &hdl)
     mFd = dup(hdl.fd);
     mHandle = hdl;
     if (mFd < 0) {
-        DISPLAY_LOGE("the fd : %{public}d dup failed errno  %{public}d  return:%{public}d gralloc id:%{public}llu", hdl.fd, errno, mFd, hdlp.id);
+        DISPLAY_LOGE("the fd : %{public}d dup failed errno  %{public}d  return:%{public}d gralloc id:%{public}llu", 
+		     hdl.fd, errno, mFd, hdlp.id);
     }
 }
 
