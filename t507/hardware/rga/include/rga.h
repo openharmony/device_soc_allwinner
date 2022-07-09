@@ -385,8 +385,7 @@ struct rga_req {
     void (*complete)(int retval);
 };
 
-int
-RGA_set_src_act_info(
+int RGA_set_src_act_info(
     struct rga_req *req,
     unsigned int   width,       /* act width  */
     unsigned int   height,      /* act height */
@@ -395,8 +394,7 @@ RGA_set_src_act_info(
 );
 
 #if defined(__arm64__) || defined(__aarch64__)
-int
-RGA_set_src_vir_info(
+int RGA_set_src_vir_info(
     struct rga_req *req,
     unsigned long   yrgb_addr,      /* yrgb_addr  */
     unsigned long   uv_addr,        /* uv_addr    */
@@ -407,8 +405,7 @@ RGA_set_src_vir_info(
     unsigned char  a_swap_en        /* only for 32bit RGB888 format */
 );
 #else
-int
-RGA_set_src_vir_info(
+int RGA_set_src_vir_info(
     struct rga_req *req,
     unsigned int   yrgb_addr,       /* yrgb_addr  */
     unsigned int   uv_addr,         /* uv_addr    */
@@ -420,8 +417,7 @@ RGA_set_src_vir_info(
 );
 #endif
 
-int
-RGA_set_dst_act_info(
+int RGA_set_dst_act_info(
     struct rga_req *req,
     unsigned int   width,       /* act width  */
     unsigned int   height,      /* act height */
@@ -429,8 +425,7 @@ RGA_set_dst_act_info(
     unsigned int   y_off        /* y_off      */
 );
 #if defined(__arm64__) || defined(__aarch64__)
-int
-RGA_set_dst_vir_info(
+int RGA_set_dst_vir_info(
     struct rga_req *msg,
     unsigned long   yrgb_addr,  /* yrgb_addr   */
     unsigned long   uv_addr,    /* uv_addr     */
@@ -442,8 +437,7 @@ RGA_set_dst_vir_info(
     unsigned char  a_swap_en
 );
 #else
-int
-RGA_set_dst_vir_info(
+int RGA_set_dst_vir_info(
     struct rga_req *msg,
     unsigned int   yrgb_addr,   /* yrgb_addr   */
     unsigned int   uv_addr,     /* uv_addr     */
@@ -456,8 +450,7 @@ RGA_set_dst_vir_info(
 );
 #endif
 
-int
-RGA_set_pat_info(
+int RGA_set_pat_info(
     struct rga_req *msg,
     unsigned int width,
     unsigned int height,
@@ -467,15 +460,13 @@ RGA_set_pat_info(
 );
 
 #if defined(__arm64__) || defined(__aarch64__)
-int
-RGA_set_rop_mask_info(
+int RGA_set_rop_mask_info(
     struct rga_req *msg,
     unsigned long rop_mask_addr,
     unsigned int rop_mask_endian_mode
 );
 #else
-int
-RGA_set_rop_mask_info(
+int RGA_set_rop_mask_info(
     struct rga_req *msg,
     unsigned int rop_mask_addr,
     unsigned int rop_mask_endian_mode
@@ -572,15 +563,13 @@ int RGA_set_pre_scaling_mode(
 );
 
 #if defined(__arm64__) || defined(__aarch64__)
-int
-RGA_update_palette_table_mode(
+int RGA_update_palette_table_mode(
     struct rga_req *msg,
     unsigned long LUT_addr,     /* LUT table addr      */
     unsigned int palette_mode   /* 1bpp/2bpp/4bpp/8bpp */
 );
 #else
-int
-RGA_update_palette_table_mode(
+int RGA_update_palette_table_mode(
     struct rga_req *msg,
     unsigned int LUT_addr,      /* LUT table addr      */
     unsigned int palette_mode   /* 1bpp/2bpp/4bpp/8bpp */
@@ -596,8 +585,7 @@ int RGA_set_update_patten_buff_mode(
 );
 
 #if defined(__arm64__) || defined(__aarch64__)
-int
-RGA_set_mmu_info(
+int RGA_set_mmu_info(
     struct rga_req *msg,
     unsigned char  mmu_en,
     unsigned char  src_flush,
