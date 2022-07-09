@@ -212,7 +212,7 @@ int32_t HdiDisplay::Commit(int32_t *fence)
 
 int32_t HdiDisplay::SetDisplayClientBuffer(const BufferHandle *buffer, int32_t fence)
 {
-	DISPLAY_LOGD();
+    DISPLAY_LOGD();
     mClientLayer->SetLayerBuffer(buffer, fence);
     return DISPLAY_SUCCESS;
 }

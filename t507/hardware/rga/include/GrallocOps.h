@@ -54,6 +54,6 @@ int         RkRgaGetHandleAttributes(buffer_handle_t handle,
                                      std::vector<int> *attrs);
 int         RkRgaGetHandleMapAddress(buffer_handle_t handle,
                                      void **buf);
-#endif  //Android
+#endif  // Android
 
-#endif  //_rk_graphic_buffer_h_
+#endif  // _rk_graphic_buffer_h_

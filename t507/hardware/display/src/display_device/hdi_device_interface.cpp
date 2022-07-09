@@ -23,8 +23,7 @@ namespace HDI {
 namespace DISPLAY {
 std::vector<std::shared_ptr<HdiDeviceInterface>> HdiDeviceInterface::DiscoveryDevice()
 {
-
-	DISPLAY_LOGD();
+    DISPLAY_LOGD();
     int ret;
     std::vector<std::shared_ptr<HdiDeviceInterface>> devices;
     std::shared_ptr<HdiDeviceInterface> drmDevice = DrmDevice::Create();
@@ -38,7 +37,7 @@ std::vector<std::shared_ptr<HdiDeviceInterface>> HdiDeviceInterface::DiscoveryDe
     } else {
         DISPLAY_LOGE("drm device init failed");
     }
-	DISPLAY_LOGD();
+    DISPLAY_LOGD();
     return devices;
 }
 }

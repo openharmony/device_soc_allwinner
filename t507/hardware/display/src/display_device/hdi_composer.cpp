@@ -25,7 +25,6 @@ HdiComposer::HdiComposer(std::unique_ptr<HdiComposition> post)
 
 int32_t HdiComposer::Prepare(std::vector<HdiLayer *> &layers, HdiLayer &clientLayer)
 {
-
     int ret = mPostComp->SetLayers(layers, clientLayer);
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("post composition prepare failed"));
     return DISPLAY_SUCCESS;

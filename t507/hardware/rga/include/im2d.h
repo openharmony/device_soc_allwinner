@@ -321,8 +321,9 @@ IM_API const char* imStrError_t(IM_STATUS status);
         buffer; \
     })
 
-IM_API rga_buffer_t wrapbuffer_virtualaddr_t(void* vir_addr, int width, int height, int wstride, int hstride, int format);
-IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height, 
+IM_API rga_buffer_t wrapbuffer_virtualaddr_t(void* vir_addr, int width, int height,
+                                             int wstride, int hstride, int format);
+IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height,
                                               int wstride, int hstride, int format);
 IM_API rga_buffer_t wrapbuffer_fd_t(int fd, int width, int height, int wstride, int hstride, int format);
 

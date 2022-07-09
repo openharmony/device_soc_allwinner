@@ -26,10 +26,10 @@ extern "C" {
 #define MAX_PLANES 3
 
 typedef struct plane_info {
-	uint32_t offset;
-	uint32_t byte_stride;
-	uint32_t alloc_width;
-	uint32_t alloc_height;
+    uint32_t offset;
+    uint32_t byte_stride;
+    uint32_t alloc_width;
+    uint32_t alloc_height;
 }plane_info_t;
 
 typedef struct {
@@ -37,7 +37,7 @@ typedef struct {
     int yuv_info;
     int plan_num;
     plane_info_t plane_info[MAX_PLANES];
-	uint64_t id;
+    uint64_t id;
 } PriBufferHandle;
 
 #ifdef __cplusplus

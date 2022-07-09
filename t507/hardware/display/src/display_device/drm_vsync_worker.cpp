@@ -107,7 +107,7 @@ void DrmVsyncWorker::WorkThread()
     while (WaitSignalAndCheckRuning()) {
         // wait the vblank
         uint64_t time = 0;
-	time = WaitNextVBlank(seq);
+    time = WaitNextVBlank(seq);
         if (mCallBack != nullptr) {
             mCallBack->Vsync(seq, time);
         } else {

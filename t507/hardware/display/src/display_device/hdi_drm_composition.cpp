@@ -49,11 +49,11 @@ int32_t HdiDrmComposition::SetLayers(std::vector<HdiLayer *> &layers, HdiLayer &
     // now we do not surpport present direct
     DISPLAY_LOGD("SetLayers%{public}d\n", layers.size());
     mCompLayers.clear();
-	//TMP OHOS station support all layer
-	 for (auto &layer : layers) {
-    	layer->SetDeviceSelect(COMPOSITION_CLIENT);
+    // TMP OHOS station support all layer
+    for (auto &layer : layers) {
+        layer->SetDeviceSelect(COMPOSITION_CLIENT);
     }
-	 mCompLayers.push_back(&clientLayer);
+    mCompLayers.push_back(&clientLayer);
     return DISPLAY_SUCCESS;
 }
 

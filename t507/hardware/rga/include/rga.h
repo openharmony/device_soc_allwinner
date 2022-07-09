@@ -249,7 +249,7 @@ typedef struct MMU {
 #else
     unsigned int base_addr;
 #endif
-    unsigned int mmu_flag;     /* [0] mmu enable [1] src_flush [2] dst_flush [3] CMD_flush [4~5] page size*/
+    unsigned int mmu_flag;     /* [0] mmu enable [1] src_flush [2] dst_flush [3] CMD_flush [4~5] page size */
 } MMU;
 
 typedef struct COLOR_FILL {
@@ -261,7 +261,6 @@ typedef struct COLOR_FILL {
     short gr_y_g;
     short gr_x_r;
     short gr_y_r;
-
 }
 COLOR_FILL;
 
@@ -313,7 +312,7 @@ struct rga_req {
 #endif
 
     RECT clip;                            /* dst clip window default value is dst_vir */
-                                          /* value from [0, w-1] / [0, h-1]*/
+                                          /* value from [0, w-1] / [0, h-1] */
 
     int sina;                             /* dst angle  default value 0  16.16 scan from table */
     int cosa;                             /* dst angle  default value 0  16.16 scan from table */
@@ -348,15 +347,15 @@ struct rga_req {
 
     unsigned char alpha_global_value;     /* global alpha value */
 
-    unsigned short rop_code;              /* rop2/3/4 code  scan from rop code table*/
+    unsigned short rop_code;              /* rop2/3/4 code  scan from rop code table */
 
-    unsigned char bsfilter_flag;          /* [2] 0 blur 1 sharp / [1:0] filter_type*/
+    unsigned char bsfilter_flag;          /* [2] 0 blur 1 sharp / [1:0] filter_type */
 
-    unsigned char palette_mode;           /* (enum) color palatte  0/1bpp, 1/2bpp 2/4bpp 3/8bpp*/
+    unsigned char palette_mode;           /* (enum) color palatte  0/1bpp, 1/2bpp 2/4bpp 3/8bpp */
 
-    unsigned char yuv2rgb_mode;           /* (enum) BT.601 MPEG / BT.601 JPEG / BT.709  */
+    unsigned char yuv2rgb_mode;           /* (enum) BT.601 MPEG / BT.601 JPEG / BT.709 */
 
-    unsigned char endian_mode;            /* 0/big endian 1/little endian*/
+    unsigned char endian_mode;            /* 0/big endian 1/little endian */
 
     unsigned char rotate_mode;            /* (enum) rotate mode  */
                                           /* 0x0,     no rotate  */
@@ -480,7 +479,7 @@ int RGA_set_alpha_en_info(
     unsigned int  global_a_value,
     unsigned int  PD_en,             /* porter duff alpha mode en */
     unsigned int  PD_mode,
-    unsigned int  dst_alpha_en );    /* use dst alpha  */
+    unsigned int  dst_alpha_en);     /* use dst alpha  */
 
 int RGA_set_rop_en_info(
     struct rga_req *msg,

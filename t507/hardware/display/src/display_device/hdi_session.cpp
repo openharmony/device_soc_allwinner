@@ -130,7 +130,6 @@ static int32_t SetDisplayBacklight(uint32_t devId, uint32_t value)
 
 static int32_t GetDisplayProperty(uint32_t devId, uint32_t id, uint64_t *value)
 {
-    
     (void)id;
     DISPLAY_CHK_RETURN((value == nullptr), DISPLAY_NULL_PTR, DISPLAY_LOGE("value is nullptr"));
     return DISPLAY_NOT_SUPPORT;

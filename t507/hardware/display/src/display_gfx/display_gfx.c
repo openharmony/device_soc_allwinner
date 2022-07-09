@@ -38,7 +38,8 @@ int32_t rkDeinitGfx()
 RgaSURF_FORMAT colorSpaceModeChange(PixelFormat color, uint8_t *isYuv)
 {
     RgaSURF_FORMAT rkFormat;
-    switch(color) {
+
+    switch (color) {
         case PIXEL_FMT_RGB_565:          /**< RGB565 format */
             rkFormat = RK_FORMAT_RGB_565;
             *isYuv = 0;
@@ -144,7 +145,7 @@ RgaSURF_FORMAT colorSpaceModeChange(PixelFormat color, uint8_t *isYuv)
 //          PIXEL_FMT_BGRX_5551,        /**< BGRX5551 format */
 //          PIXEL_FMT_YUV_422_I,        /**< YUV422 interleaved format */
             rkFormat = RK_FORMAT_UNKNOWN;
-        break;
+            break;
     }
     return rkFormat;
 }
@@ -198,7 +199,8 @@ int32_t rkFillRect(ISurface *iSurface, IRect *rect, uint32_t color, GfxOpt *opt)
 int32_t blendTypeChange(BlendType blendType)
 {
     int32_t rkBlendType;
-    switch(blendType) {
+
+    switch (blendType) {
         case BLEND_SRC:              /**< SRC blending */
             rkBlendType = IM_ALPHA_BLEND_SRC;
             break;
@@ -256,7 +258,7 @@ int32_t TransformTypeChange(TransformType type)
 int32_t mirrorTypeChange(MirrorType type)
 {
     int32_t rkMirrorType;
-    switch(type) {
+    switch (type) {
         case MIRROR_LR:            /**< Left and right mirrors */
             rkMirrorType = IM_HAL_TRANSFORM_FLIP_H;
             break;
@@ -383,7 +385,7 @@ int32_t doFlit(ISurface *srcSurface, IRect *srcRect, ISurface *dstSurface, IRect
             usage |= rkMirrorType;
     }
     if (opt->enableScale) {
-        DISPLAY_LOGE("gfx scale from (%{puhblic}d, %{public}d) to (%{public}d, %{public}d)", srcRgaBuffer.width, 
+        DISPLAY_LOGE("gfx scale from (%{puhblic}d, %{public}d) to (%{public}d, %{public}d)", srcRgaBuffer.width,
                      srcRgaBuffer.height, dstRgaBuffer.width, dstRgaBuffer.height);
     }
     usage |= IM_SYNC;

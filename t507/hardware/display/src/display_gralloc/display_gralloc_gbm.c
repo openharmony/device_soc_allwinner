@@ -278,12 +278,12 @@ static void InitBufferHandle(struct gbm_bo *bo, int fd, const AllocInfo *info, P
             buffer->plane_info[1].alloc_width = buffer->plane_info[0].alloc_width/2;   // alloc_height/2
             buffer->plane_info[1].byte_stride = buffer->plane_info[0].byte_stride;
             buffer->plane_info[1].offset = buffer->plane_info[0].byte_stride * buffer->plane_info[0].alloc_height;
+            break;
 
-        break;
         case PIXEL_FMT_YCBCR_422_SP:
         case PIXEL_FMT_YCRCB_422_SP:
+            break;
 
-        break;
         case    PIXEL_FMT_YCBCR_420_P:
         case    PIXEL_FMT_YCRCB_420_P:
             buffer->plan_num = 3;    // plan_num is 3
@@ -300,13 +300,13 @@ static void InitBufferHandle(struct gbm_bo *bo, int fd, const AllocInfo *info, P
             buffer->plane_info[2].alloc_width = buffer->plane_info[0].alloc_width/2;   // alloc_width/2
             buffer->plane_info[2].byte_stride = buffer->plane_info[0].byte_stride/2;   // byte_stride/2
             buffer->plane_info[2].offset = buffer->plane_info[1].offset
-                                    + buffer->plane_info[1].byte_stride * buffer->plane_info[1].alloc_height;  // plane_info[1].alloc_height
+                + buffer->plane_info[1].byte_stride * buffer->plane_info[1].alloc_height; // plane_info[1].alloc_height
+            break;
 
-        break;
         case    PIXEL_FMT_YCBCR_422_P:
         case    PIXEL_FMT_YCRCB_422_P:
+            break;
 
-        break;
         default:
             buffer->plan_num = 1;
             buffer->yuv_info = AW_YUV_NO_INFO;
@@ -324,7 +324,7 @@ int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
     PriBufferHandle *priBuffer = NULL;
     uint32_t drmFmt = ConvertFormatToDrm(info->format);
     DISPLAY_CHK_RETURN((drmFmt == INVALID_PIXEL_FMT), DISPLAY_NOT_SUPPORT,
-                DISPLAY_LOGE("format %{public}d can not support", info->format));
+    DISPLAY_LOGE("format %{public}d can not support", info->format));
 
     GRALLOC_LOCK();
     GrallocManager *grallocManager = GetGrallocManager();
@@ -345,9 +345,9 @@ int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
 
     InitBufferHandle(bo, fd, info, priBuffer);
     priBuffer->id = global_id++;
-    DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d, 
-                 drmformat %{public}d, format %{public}d buffer id:%{public}llu",
-                 info->width, info->height, drmFmt, info->format, priBuffer->id);
+    DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d,
+        drmformat %{public}d, format %{public}d buffer id:%{public}llu",
+        info->width, info->height, drmFmt, info->format, priBuffer->id);
 
     priBuffer->hdl.phyAddr = 0;
     *buffer = &priBuffer->hdl;

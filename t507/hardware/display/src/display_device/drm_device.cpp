@@ -291,8 +291,8 @@ std::unordered_map<uint32_t, std::shared_ptr<HdiDisplay>> DrmDevice::DiscoveryDi
     // travel all connector
     for (auto &connectorPair : mConnectors) {
         auto connector = connectorPair.second;
-        uint32_t crtcId = 0; 
-	
+        uint32_t crtcId = 0;
+
         int32_t ret = connector->PickIdleCrtcId(mEncoders, mCrtcs, crtcId);
         if (ret != DISPLAY_SUCCESS) {
             continue;

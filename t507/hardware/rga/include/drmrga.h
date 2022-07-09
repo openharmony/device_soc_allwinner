@@ -181,8 +181,9 @@ typedef struct drm_rga {
 static inline int rga_set_rect(rga_rect_t *rect,
                                int x, int y, int w, int h, int sw, int sh, int f)
 {
-    if (!rect)
+    if (!rect) {
         return -EINVAL;
+    }
 
     rect->xoffset = x;
     rect->yoffset = y;
@@ -198,12 +199,13 @@ static inline int rga_set_rect(rga_rect_t *rect,
 #ifndef ANDROID /* LINUX */
 static inline void rga_set_rotation(rga_info_t *info, int angle)
 {
-    if (angle == 90)  // angle == 90
+    if (angle == 90) {  // angle == 90
         info->rotation = HAL_TRANSFORM_ROT_90;
-    else if (angle == 180)  // angle == 180
+    } else if (angle == 180) {  // angle == 180
         info->rotation = HAL_TRANSFORM_ROT_180;
-    else if (angle == 270)   // angle == 270
+    } else if (angle == 270) {   // angle == 270
         info->rotation = HAL_TRANSFORM_ROT_270;
+    }
 }
 #endif
 /*****************************************************************************/

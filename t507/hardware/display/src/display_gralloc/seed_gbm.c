@@ -32,17 +32,17 @@ typedef struct {
 
 typedef struct {
     uint32_t format;
-    uint32_t bitsPerPixel; 
+    uint32_t bitsPerPixel;
     uint32_t numPlanes;
     const PlaneLayoutInfo *planes;
 } FormatInfo;
 
 static const PlaneLayoutInfo g_defaultLayout = {
-	32,1
+    32,1
 };
 
 static const PlaneLayoutInfo g_yuvLayout = {
-    	16,1
+    16,1
 };
 
 static const FormatInfo *GetFormatInfo(uint32_t format)
@@ -82,8 +82,8 @@ static bool AdjustStrideFromFormat(const FormatInfo *fmtInfo, uint32_t *heightSt
 {
     if (fmtInfo != NULL) {
         *heightStride = ALIGN_UP((*heightStride), fmtInfo->planes->hPixelAlign);
-	    *widthStride = ALIGN_UP((*widthStride), fmtInfo->planes->wPixelAlign);
-		return true;
+        *widthStride = ALIGN_UP((*widthStride), fmtInfo->planes->wPixelAlign);
+        return true;
     }
     return false;
 }
@@ -99,7 +99,7 @@ struct gbm_bo *hdi_gbm_bo_create(struct gbm_device *gbm, uint32_t width, uint32_
     struct gbm_bo *bo  = (struct gbm_bo *)calloc(1, sizeof(struct gbm_bo));
     DISPLAY_CHK_RETURN((bo == NULL), NULL, DISPLAY_LOGE("gbm bo create fialed no memery"));
     (void)memset_s(bo, sizeof(struct gbm_bo), 0, sizeof(struct gbm_bo));
-    AdjustStrideFromFormat(fmtInfo,&height, &width);
+    AdjustStrideFromFormat(fmtInfo, &height, &width);
     bo->width = width;
     bo->height = height;
     bo->gbm = gbm;

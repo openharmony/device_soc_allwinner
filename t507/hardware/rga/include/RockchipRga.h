@@ -48,7 +48,7 @@
 namespace android {
 #endif
 
-    class RockchipRga :public Singleton<RockchipRga> {
+    class RockchipRga : public Singleton<RockchipRga> {
     public:
         static inline RockchipRga& get()
         {
@@ -99,7 +99,7 @@ namespace android {
         bool                            mSupportRga;
         int                             mLogOnce;
         int                             mLogAlways;
-        void *                          mContext;
+        void                            *mContext;
 
         friend class Singleton<RockchipRga>;
     };

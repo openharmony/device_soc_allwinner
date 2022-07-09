@@ -120,7 +120,7 @@ public:
         {
             mLock.lock();
         }
-        inline ~Autolock() RELEASE() 
+        inline ~Autolock() RELEASE()
         {
             mLock.unlock();
         }
