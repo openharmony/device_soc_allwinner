@@ -407,7 +407,7 @@ IM_API const char* querystring(int name);
         ret; \
     })
 IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const rga_buffer_t pat,
-                           const im_rect src_rect, const im_rect dst_rect, 
+                           const im_rect src_rect, const im_rect dst_rect,
                            const im_rect pat_rect, const int mdoe_usage);
 
 /*
@@ -574,7 +574,7 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
     })
 
 #define imreset(buf, rect, color, ...) \
-    ({ \
+    ( { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \

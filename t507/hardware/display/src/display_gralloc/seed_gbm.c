@@ -38,11 +38,11 @@ typedef struct {
 } FormatInfo;
 
 static const PlaneLayoutInfo g_defaultLayout = {
-    32,1
+    32, 1
 };
 
 static const PlaneLayoutInfo g_yuvLayout = {
-    16,1
+    16, 1
 };
 
 static const FormatInfo *GetFormatInfo(uint32_t format)

@@ -340,13 +340,14 @@ int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
 
     priBuffer = (PriBufferHandle *)malloc(sizeof(PriBufferHandle));
     DISPLAY_CHK_RETURN((priBuffer == NULL), DISPLAY_NULL_PTR, DISPLAY_LOGE("bufferhandle malloc failed"); goto error);
+
     errno_t eok = memset_s(priBuffer, sizeof(PriBufferHandle), 0, sizeof(PriBufferHandle));
     DISPLAY_CHK_RETURN((eok != EOK), DISPLAY_PARAM_ERR, DISPLAY_LOGE("memset_s failed"); goto error);
 
     InitBufferHandle(bo, fd, info, priBuffer);
     priBuffer->id = global_id++;
     DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d,
-        drmformat %{public}d, format %{public}d buffer id:%{public}llu",
+        drmformat %{public}d, format %{public}d buffer id: %{public}llu",
         info->width, info->height, drmFmt, info->format, priBuffer->id);
 
     priBuffer->hdl.phyAddr = 0;
@@ -450,7 +451,7 @@ int32_t GbmGrallocUninitialize(void)
     GRALLOC_LOCK();
     GrallocManager *grallocManager = GetGrallocManager();
     DISPLAY_CHK_RETURN((grallocManager == NULL), DISPLAY_PARAM_ERR, DISPLAY_LOGE("gralloc manager failed");
-        GRALLOC_UNLOCK());
+    GRALLOC_UNLOCK());
     grallocManager->referCount--;
     if (grallocManager->referCount < 0) {
         DeInitGbmDevice(grallocManager);
@@ -467,7 +468,7 @@ int32_t GbmGrallocInitialize(void)
     GRALLOC_LOCK();
     GrallocManager *grallocManager = GetGrallocManager();
     DISPLAY_CHK_RETURN((grallocManager == NULL), DISPLAY_PARAM_ERR, DISPLAY_LOGE("gralloc manager failed");
-        GRALLOC_UNLOCK());
+    GRALLOC_UNLOCK());
     int ret = InitGbmDevice(g_drmFileNode, grallocManager);
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), ret, DISPLAY_LOGE("gralloc manager failed"); GRALLOC_UNLOCK());
     grallocManager->referCount++;
