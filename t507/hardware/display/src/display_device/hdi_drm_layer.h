@@ -48,13 +48,13 @@ private:
 class HdiDrmLayer : public HdiLayer {
 public:
     explicit HdiDrmLayer(LayerType type) : HdiLayer(type) {}
-    virtual ~HdiDrmLayer() {}
+    ~HdiDrmLayer() {}
     // Return value optimization
     DrmGemBuffer *GetGemBuffer();
 
 private:
     std::unique_ptr<DrmGemBuffer> mCurrentBuffer;
-    std::unique_ptr<DrmGemBuffer> LastBuffer;
+	std::unique_ptr<DrmGemBuffer> LastBuffer;
 };
 } // namespace OHOS
 } // namespace HDI

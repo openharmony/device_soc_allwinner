@@ -20,6 +20,9 @@
 #define _RGA_DRIVER_H_
 
 #ifdef __cplusplus
+
+#include <stdint.h>
+
 extern "C"
 {
 #endif

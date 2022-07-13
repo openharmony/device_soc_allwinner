@@ -21,11 +21,11 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
-#include <linux/dma-buf.h>
 #include <pthread.h>
-#include <sys/mman.h>
-#include <xf86drm.h>
 #include <securec.h>
+#include <xf86drm.h>
+#include <linux/dma-buf.h>
+#include <sys/mman.h>
 #include "drm_fourcc.h"
 #include "seed_gbm.h"
 #include "hdf_dlist.h"
