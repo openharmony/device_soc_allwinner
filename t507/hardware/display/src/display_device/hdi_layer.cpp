@@ -28,11 +28,12 @@ std::unordered_set<uint32_t> HdiLayer::mIdSets;
 HdiLayerBuffer::HdiLayerBuffer(const BufferHandle &hdl)
     : mPhyAddr(hdl.phyAddr), mHeight(hdl.height), mWidth(hdl.width), mStride(hdl.stride), mFormat(hdl.format)
 {
-	PriBufferHandle &hdlp = (PriBufferHandle&) hdl;
+    PriBufferHandle &hdlp = (PriBufferHandle&) hdl;
     mFd = dup(hdl.fd);
     mHandle = hdl;
     if (mFd < 0) {
-        DISPLAY_LOGE("the fd : %{public}d dup failed errno  %{public}d  return:%{public}d gralloc id:%{public}llu", hdl.fd, errno, mFd, hdlp.id);
+        DISPLAY_LOGE("the fd : %{public}d dup failed errno  %{public}d  return:%{public}d gralloc id:%{public}llu",
+            hdl.fd, errno, mFd, hdlp.id);
     }
 }
 

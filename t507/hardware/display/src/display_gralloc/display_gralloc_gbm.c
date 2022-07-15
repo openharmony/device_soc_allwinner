@@ -22,10 +22,10 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <pthread.h>
-#include <securec.h>
 #include <xf86drm.h>
-#include <linux/dma-buf.h>
+#include <securec.h>
 #include <sys/mman.h>
+#include <linux/dma-buf.h>
 #include "drm_fourcc.h"
 #include "seed_gbm.h"
 #include "hdf_dlist.h"

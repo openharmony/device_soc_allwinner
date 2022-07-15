@@ -77,7 +77,7 @@ DrmGemBuffer *HdiDrmLayer::GetGemBuffer()
 {
     DISPLAY_LOGD();
     std::unique_ptr<DrmGemBuffer> ptr = std::make_unique<DrmGemBuffer>(DrmDevice::GetDrmFd(), *GetCurrentBuffer());
-	LastBuffer = std::move(mCurrentBuffer);
+    LastBuffer = std::move(mCurrentBuffer);
     mCurrentBuffer = std::move(ptr);
     return mCurrentBuffer.get();
 }

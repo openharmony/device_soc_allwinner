@@ -321,8 +321,10 @@ IM_API const char* imStrError_t(IM_STATUS status);
         buffer; \
     } )
 
-IM_API rga_buffer_t wrapbuffer_virtualaddr_t(void* vir_addr, int width, int height, int wstride, int hstride, int format);
-IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height, int wstride, int hstride, int format);
+IM_API rga_buffer_t wrapbuffer_virtualaddr_t(void* vir_addr, int width, int height,
+                                             int wstride, int hstride, int format);
+IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height, 
+                                              int wstride, int hstride, int format);
 IM_API rga_buffer_t wrapbuffer_fd_t(int fd, int width, int height, int wstride, int hstride, int format);
 
 /*
@@ -405,7 +407,8 @@ IM_API const char* querystring(int name);
         ret; \
     } )
 IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const rga_buffer_t pat,
-                           const im_rect src_rect, const im_rect dst_rect, const im_rect pat_rect, const int mdoe_usage);
+                           const im_rect src_rect, const im_rect dst_rect, 
+                           const im_rect pat_rect, const int mdoe_usage);
 
 /*
  * Resize
@@ -443,11 +446,12 @@ IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const
 #define impyramid(src, dst, direction) \
         imresize_t(src, \
                    dst, \
-                   direction == IM_UP_SCALE ? 0.5 : 2, \
-                   direction == IM_UP_SCALE ? 0.5 : 2, \
+                   direction == IM_UP_SCALE ? (0.5) : (2), \
+                   direction == IM_UP_SCALE ? (0.5) : (2), \
                    INTER_LINEAR, 1)
 
-IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx, double fy, int interpolation, int sync);
+IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx,
+                            double fy, int interpolation, int sync);
 
 /*
  * Crop
@@ -872,7 +876,8 @@ IM_API IM_STATUS imrop_t(const rga_buffer_t src, rga_buffer_t dst, int rop_code,
  *
  * @returns success or else negative error code.
  */
-IM_API IM_STATUS improcess(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t pat, im_rect srect, im_rect drect, im_rect prect, int usage);
+IM_API IM_STATUS improcess(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t pat,
+                           im_rect srect, im_rect drect, im_rect prect, int usage);
 
 /*
  * block until all execution is complete
