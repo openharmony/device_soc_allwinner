@@ -29,7 +29,7 @@ namespace DISPLAY {
 const int INVALID_DRM_ID = 0;
 class DrmGemBuffer {
 public:
-    DrmGemBuffer(int drmFd, HdiLayerBuffer &hdl);
+    DrmGemBuffer(int drmfd, HdiLayerBuffer &hdl);
     virtual ~DrmGemBuffer();
     uint32_t GetFbId() const
     {

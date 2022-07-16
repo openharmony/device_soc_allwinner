@@ -323,7 +323,7 @@ IM_API const char* imStrError_t(IM_STATUS status);
 
 IM_API rga_buffer_t wrapbuffer_virtualaddr_t(void* vir_addr, int width, int height,
                                              int wstride, int hstride, int format);
-IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height, 
+IM_API rga_buffer_t wrapbuffer_physicaladdr_t(void* phy_addr, int width, int height,
                                               int wstride, int hstride, int format);
 IM_API rga_buffer_t wrapbuffer_fd_t(int fd, int width, int height, int wstride, int hstride, int format);
 
@@ -377,8 +377,14 @@ IM_API const char* querystring(int name);
         IM_STATUS ret = IM_STATUS_NOERROR; \
         rga_buffer_t pat; \
         im_rect pat_rect; \
-        memset(&pat, 0, sizeof(rga_buffer_t)); \
-        memset(&pat_rect, 0, sizeof(im_rect)); \
+        int tmp = memset_s(&pat, 0, sizeof(rga_buffer_t), 0); \
+        if (!tmp) { \
+            printf("memset fail %d\n", tmp); \
+        } \
+        tmp = memset_s(&pat_rect, 0, sizeof(im_rect), 0); \
+        if (!tmp) { \
+            printf("memset fail %d\n", tmp); \
+        } \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \
@@ -446,8 +452,8 @@ IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const
 #define impyramid(src, dst, direction) \
         imresize_t(src, \
                    dst, \
-                   direction == IM_UP_SCALE ? (0.5) : (2), \
-                   direction == IM_UP_SCALE ? (0.5) : (2), \
+                   (direction == IM_UP_SCALE ? (0.5) : (2)), \
+                   (direction == IM_UP_SCALE ? (0.5) : (2)), \
                    INTER_LINEAR, 1)
 
 IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx,
@@ -708,7 +714,10 @@ IM_API IM_STATUS imcopy_t(const rga_buffer_t src, rga_buffer_t dst, int sync);
     { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         rga_buffer_t srcB; \
-        memset(&srcB, 0x00, sizeof(rga_buffer_t)); \
+        int tmp = memset_s(&srcB, 0x00, sizeof(rga_buffer_t), 0x00,); \
+        if (!tmp) { \
+            printf("memset fail %d\n", tmp); \
+        } \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
         if (argc == 0) { \

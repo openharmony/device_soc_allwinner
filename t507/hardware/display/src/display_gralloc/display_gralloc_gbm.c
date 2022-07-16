@@ -324,7 +324,7 @@ int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
     PriBufferHandle *priBuffer = NULL;
     uint32_t drmFmt = ConvertFormatToDrm(info->format);
     DISPLAY_CHK_RETURN((drmFmt == INVALID_PIXEL_FMT), DISPLAY_NOT_SUPPORT,
-    DISPLAY_LOGE("format %{public}d can not support", info->format));
+        DISPLAY_LOGE("format %{public}d can not support", info->format));
 
     GRALLOC_LOCK();
     GrallocManager *grallocManager = GetGrallocManager();
@@ -349,9 +349,9 @@ int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
 
     InitBufferHandle(bo, fd, info, priBuffer);
     priBuffer->id = global_id++;
-    DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d, 
-                 drmformat %{public}d, format %{public}d buffer id:%{public}llu",
-                 info->width, info->height, drmFmt, info->format, priBuffer->id);
+    DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d,
+        drmformat %{public}d, format %{public}d buffer id:%{public}llu",
+        info->width, info->height, drmFmt, info->format, priBuffer->id);
 
     priBuffer->hdl.phyAddr = 0;
     *buffer = &priBuffer->hdl;

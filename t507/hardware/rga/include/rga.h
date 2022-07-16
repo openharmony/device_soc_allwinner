@@ -27,8 +27,6 @@ extern "C"
 {
 #endif
 
-#include <stdint.h>
-
 #define RGA_BLIT_SYNC   0x5017
 #define RGA_BLIT_ASYNC  0x5018
 #define RGA_FLUSH       0x5019

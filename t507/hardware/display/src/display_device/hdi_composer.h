@@ -45,7 +45,7 @@ protected:
 
 class HdiComposer {
 public:
-    HdiComposer(std::unique_ptr<HdiComposition> post);
+    explicit HdiComposer(std::unique_ptr<HdiComposition> post);
     virtual ~HdiComposer() {};
     int32_t Prepare(std::vector<HdiLayer *> &layers, HdiLayer &clientLayer);
     int32_t Commit(bool modeSet);
