@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef _RGA_DRIVER_H_
-#define _RGA_DRIVER_H_
+#ifndef _RGA_DRIVERS_H_
+#define _RGA_DRIVERS_H_
 
 #ifdef __cplusplus
 
