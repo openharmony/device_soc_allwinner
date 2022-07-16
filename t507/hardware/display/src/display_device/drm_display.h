@@ -32,7 +32,7 @@ public:
     DrmDisplay(std::shared_ptr<DrmConnector> connector, std::shared_ptr<DrmCrtc> crtc,
         std::shared_ptr<DrmDevice> drmDevice);
 
-    ~DrmDisplay();
+    ~DrmDisplay() override;
 
     int32_t Init() override;
     int32_t GetDisplayCapability(DisplayCapability *info) override;

@@ -452,8 +452,8 @@ IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const
 #define impyramid(src, dst, direction) \
         imresize_t(src, \
                    dst, \
-                   (direction == IM_UP_SCALE ? (0.5) : (2)), \
-                   (direction == IM_UP_SCALE ? (0.5) : (2)), \
+                   (direction) == IM_UP_SCALE ? (0.5) : (2), \
+                   (direction) == IM_UP_SCALE ? (0.5) : (2), \
                    INTER_LINEAR, 1)
 
 IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx,
