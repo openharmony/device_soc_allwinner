@@ -36,8 +36,8 @@
     do {                               \
         close(fd);                     \
         hdi_gbm_bo_destroy(bo);        \
-        if (priBuffer != NULL) {       \
-            free(priBuffer);           \
+        if ((priBuffer) != NULL) {       \
+            free((priBuffer));           \
         }                              \
         GRALLOC_UNLOCK();              \
         return DISPLAY_FAILURE;        \
