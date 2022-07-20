@@ -257,7 +257,7 @@ typedef struct {
  * @return error message string
  */
 #define imStrError(...) \
-    { \
+    do { \
         const char* err; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -270,14 +270,14 @@ typedef struct {
             printf("Fatal error, imStrError() too many parameters\n"); \
         } \
         err; \
-    }
+    } while (0)
 IM_API const char* imStrError_t(IM_STATUS status);
 
 /*
  * @return rga_buffer_t
  */
 #define wrapbuffer_virtualaddr(vir_addr, width, height, format, ...) \
-    { \
+    do { \
         rga_buffer_t buffer; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -289,10 +289,10 @@ IM_API const char* imStrError_t(IM_STATUS status);
             printf("invalid parameter\n"); \
         } \
         buffer; \
-    }
+    } while (0)
 
 #define wrapbuffer_physicaladdr(phy_addr, width, height, format, ...) \
-    { \
+    do { \
         rga_buffer_t buffer; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -304,10 +304,10 @@ IM_API const char* imStrError_t(IM_STATUS status);
             printf("invalid parameter\n"); \
         } \
         buffer; \
-    }
+    } while (0)
 
 #define wrapbuffer_fd(fd, width, height, format, ...) \
-    { \
+    do { \
         rga_buffer_t buffer; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -319,7 +319,7 @@ IM_API const char* imStrError_t(IM_STATUS status);
             printf("invalid parameter\n"); \
         } \
         buffer; \
-    }
+    } while (0)
 
 IM_API rga_buffer_t wrapbuffer_virtualaddr_t(void* vir_addr, int width, int height,
                                              int wstride, int hstride, int format);
@@ -373,7 +373,7 @@ IM_API const char* querystring(int name);
  * @returns no error or else negative error code.
  */
 #define imcheck(src, dst, src_rect, dst_rect, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_NOERROR; \
         rga_buffer_t pat; \
         im_rect pat_rect; \
@@ -396,9 +396,9 @@ IM_API const char* querystring(int name);
             printf("check failed\n"); \
         } \
         ret; \
-    }
+    } while (0)
 #define imcheck_composite(src, dst, pat, src_rect, dst_rect, pat_rect, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_NOERROR; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -411,7 +411,7 @@ IM_API const char* querystring(int name);
             printf("check failed\n"); \
         } \
         ret; \
-    }
+    } while (0)
 IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const rga_buffer_t pat,
                            const im_rect src_rect, const im_rect dst_rect,
                            const im_rect pat_rect, const int mdoe_usage);
@@ -430,7 +430,7 @@ IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const
  * @returns success or else negative error code.
  */
 #define imresize(src, dst, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         double args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(double); \
@@ -447,7 +447,7 @@ IM_API IM_STATUS imcheck_t(const rga_buffer_t src, const rga_buffer_t dst, const
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 #define impyramid(src, dst, direction) \
         imresize_t(src, \
@@ -471,7 +471,7 @@ IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx,
  * @returns success or else negative error code.
  */
 #define imcrop(src, dst, rect, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -484,7 +484,7 @@ IM_API IM_STATUS imresize_t(const rga_buffer_t src, rga_buffer_t dst, double fx,
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 IM_API IM_STATUS imcrop_t(const rga_buffer_t src, rga_buffer_t dst, im_rect rect, int sync);
 
@@ -503,7 +503,7 @@ IM_API IM_STATUS imcrop_t(const rga_buffer_t src, rga_buffer_t dst, im_rect rect
  * @returns success or else negative error code.
  */
 #define imrotate(src, dst, rotation, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -516,7 +516,7 @@ IM_API IM_STATUS imcrop_t(const rga_buffer_t src, rga_buffer_t dst, im_rect rect
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 IM_API IM_STATUS imrotate_t(const rga_buffer_t src, rga_buffer_t dst, int rotation, int sync);
 
@@ -534,7 +534,7 @@ IM_API IM_STATUS imrotate_t(const rga_buffer_t src, rga_buffer_t dst, int rotati
  * @returns success or else negative error code.
  */
 #define imflip(src, dst, mode, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -547,7 +547,7 @@ IM_API IM_STATUS imrotate_t(const rga_buffer_t src, rga_buffer_t dst, int rotati
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, int sync);
 
@@ -564,7 +564,7 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
  * @returns success or else negative error code.
  */
 #define imfill(buf, rect, color, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -577,10 +577,10 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 #define imreset(buf, rect, color, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -593,10 +593,10 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 #define imdraw(buf, rect, color, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -609,7 +609,7 @@ IM_API IM_STATUS imflip_t (const rga_buffer_t src, rga_buffer_t dst, int mode, i
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 IM_API IM_STATUS imfill_t(rga_buffer_t dst, im_rect rect, int color, int sync);
 
 /*
@@ -624,7 +624,7 @@ IM_API IM_STATUS imfill_t(rga_buffer_t dst, im_rect rect, int color, int sync);
  * @returns success or else negative error code.
  */
 #define impalette(src, dst, lut,  ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -637,7 +637,7 @@ IM_API IM_STATUS imfill_t(rga_buffer_t dst, im_rect rect, int color, int sync);
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 IM_API IM_STATUS impalette_t(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t lut, int sync);
 
 /*
@@ -653,7 +653,7 @@ IM_API IM_STATUS impalette_t(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t lu
  * @returns success or else negative error code.
  */
 #define imtranslate(src, dst, x, y, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -666,7 +666,7 @@ IM_API IM_STATUS impalette_t(rga_buffer_t src, rga_buffer_t dst, rga_buffer_t lu
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 IM_API IM_STATUS imtranslate_t(const rga_buffer_t src, rga_buffer_t dst, int x, int y, int sync);
 
 /*
@@ -680,7 +680,7 @@ IM_API IM_STATUS imtranslate_t(const rga_buffer_t src, rga_buffer_t dst, int x, 
  * @returns success or else negative error code.
  */
 #define imcopy(src, dst, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -693,7 +693,7 @@ IM_API IM_STATUS imtranslate_t(const rga_buffer_t src, rga_buffer_t dst, int x, 
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 IM_API IM_STATUS imcopy_t(const rga_buffer_t src, rga_buffer_t dst, int sync);
 
@@ -711,7 +711,7 @@ IM_API IM_STATUS imcopy_t(const rga_buffer_t src, rga_buffer_t dst, int sync);
  * @returns success or else negative error code.
  */
 #define imblend(srcA, dst, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         rga_buffer_t srcB; \
         int tmp = memset_s(&srcB, 0x00, sizeof(rga_buffer_t), 0x00,); \
@@ -731,9 +731,9 @@ IM_API IM_STATUS imcopy_t(const rga_buffer_t src, rga_buffer_t dst, int sync);
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 #define imcomposite(srcA, srcB, dst, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -748,7 +748,7 @@ IM_API IM_STATUS imcopy_t(const rga_buffer_t src, rga_buffer_t dst, int sync);
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 IM_API IM_STATUS imblend_t(const rga_buffer_t srcA, const rga_buffer_t srcB, rga_buffer_t dst, int mode, int sync);
 
 /*
@@ -765,7 +765,7 @@ IM_API IM_STATUS imblend_t(const rga_buffer_t srcA, const rga_buffer_t srcB, rga
  * @returns success or else negative error code.
  */
 #define imcolorkey(src, dst, range, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -780,7 +780,7 @@ IM_API IM_STATUS imblend_t(const rga_buffer_t srcA, const rga_buffer_t srcB, rga
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 IM_API IM_STATUS imcolorkey_t(const rga_buffer_t src, rga_buffer_t dst, im_colorkey_range range, int mode, int sync);
 
 /*
@@ -798,7 +798,7 @@ IM_API IM_STATUS imcolorkey_t(const rga_buffer_t src, rga_buffer_t dst, im_color
  * @returns success or else negative error code.
  */
 #define imcvtcolor(src, dst, sfmt, dfmt, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -813,7 +813,7 @@ IM_API IM_STATUS imcolorkey_t(const rga_buffer_t src, rga_buffer_t dst, im_color
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 IM_API IM_STATUS imcvtcolor_t(rga_buffer_t src, rga_buffer_t dst, int sfmt, int dfmt, int mode, int sync);
 
@@ -829,7 +829,7 @@ IM_API IM_STATUS imcvtcolor_t(rga_buffer_t src, rga_buffer_t dst, int sfmt, int 
  * @returns success or else negative error code.
  */
 #define imquantize(src, dst, nn_info, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -842,7 +842,7 @@ IM_API IM_STATUS imcvtcolor_t(rga_buffer_t src, rga_buffer_t dst, int sfmt, int 
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 
 IM_API IM_STATUS imquantize_t(const rga_buffer_t src, rga_buffer_t dst, im_nn_t nn_info, int sync);
 
@@ -858,7 +858,7 @@ IM_API IM_STATUS imquantize_t(const rga_buffer_t src, rga_buffer_t dst, im_nn_t 
  * @returns success or else negative error code.
  */
 #define imrop(src, dst, rop_code, ...) \
-    { \
+    do { \
         IM_STATUS ret = IM_STATUS_SUCCESS; \
         int args[] = {__VA_ARGS__}; \
         int argc = sizeof(args)/sizeof(int); \
@@ -871,7 +871,7 @@ IM_API IM_STATUS imquantize_t(const rga_buffer_t src, rga_buffer_t dst, im_nn_t 
             printf("invalid parameter\n"); \
         } \
         ret; \
-    }
+    } while (0)
 IM_API IM_STATUS imrop_t(const rga_buffer_t src, rga_buffer_t dst, int rop_code, int sync);
 
 /*
