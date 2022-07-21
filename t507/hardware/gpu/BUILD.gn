@@ -1,0 +1,98 @@
+import("//build/ohos.gni")
+import("//build/ohos/ndk/ndk.gni")
+
+ohos_prebuilt_shared_library("mesa_gbm") {
+  source = "lib-mesa/libgbm.so.1.0.0"
+  install_enable = true
+  install_images = [ chipset_base_dir ]
+  relative_install_dir = "chipsetsdk"
+  subsystem_name = "allwinner_products"
+  part_name = "allwinner_products"
+  symlink_target_name = [
+    "libgbm.so.1",
+    "libgbm.so",
+  ]
+}
+
+ohos_prebuilt_shared_library("mesa_egl") {
+  source = "lib-mesa/libEGL.so.1.0.0"
+  install_enable = true
+  install_images = [ chipset_base_dir ]
+  relative_install_dir = "chipsetsdk"
+  subsystem_name = "allwinner_products"
+  part_name = "allwinner_products"
+  symlink_target_name = [
+    "libEGL.so.1",
+    "libEGL.so",
+    "libGLESv1.so",
+  ]
+}
+
+ohos_prebuilt_shared_library("mesa_glapi") {
+  source = "lib-mesa/libglapi.so.0.0.0"
+  install_enable = true
+  install_images = [ chipset_base_dir ]
+  relative_install_dir = "chipsetsdk"
+  subsystem_name = "allwinner_products"
+  part_name = "allwinner_products"
+  symlink_target_name = [
+    "libglapi.so.0",
+    "libglapi.so",
+  ]
+}
+
+ohos_prebuilt_shared_library("mesa_glesv1") {
+  source = "lib-mesa/libGLESv1_CM.so.1.1.0"
+  install_enable = true
+  install_images = [ chipset_base_dir ]
+  relative_install_dir = "chipsetsdk"
+  subsystem_name = "allwinner_products"
+  part_name = "allwinner_products"
+  symlink_target_name = [
+    "libGLESv1_CM.so.1",
+    "libGLESv1_CM.so",
+  ]
+}
+
+ohos_prebuilt_shared_library("mesa_glesv2") {
+  source = "lib-mesa/libGLESv2.so.2.0.0"
+  install_enable = true
+  install_images = [ chipset_base_dir ]
+  relative_install_dir = "chipsetsdk"
+  subsystem_name = "allwinner_products"
+  part_name = "allwinner_products"
+  symlink_target_name = [
+    "libGLESv2.so.2",
+    "libGLESv2.so",
+  ]
+}
+
+ohos_prebuilt_shared_library("libgallium_dri") {
+  source = "lib-mesa/libgallium_dri.so"
+  install_enable = true
+  install_images = [ chipset_base_dir ]
+  relative_install_dir = "chipsetsdk"
+  subsystem_name = "allwinner_products"
+  part_name = "allwinner_products"
+  symlink_target_name = [ "libgallium_dri.so" ]
+}
+
+ohos_prebuilt_shared_library("panfrost_dri") {
+  source = "lib-mesa/panfrost_dri.so"
+  install_enable = true
+  install_images = [ "system" ]
+  subsystem_name = "allwinner_products"
+  part_name = "allwinner_products"
+  symlink_target_name = [ "allwinner_dri.so" ]
+}
+
+group("mesa-gpu") {
+  public_deps = [
+    ":mesa_egl",
+    ":mesa_gbm",
+    ":mesa_glapi",
+    ":mesa_glesv1",
+    ":mesa_glesv2",
+    ":panfrost_dri",
+  ]
+}
