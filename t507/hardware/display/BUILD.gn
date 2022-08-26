@@ -33,7 +33,7 @@ ohos_shared_library("display_gralloc") {
     "//drivers/peripheral/base",
     "//drivers/framework/include/utils",
     "//drivers/adapter/uhdf2/osal/include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//foundation/graphic/standard/prebuilts/librarys/drm/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
@@ -43,12 +43,12 @@ ohos_shared_library("display_gralloc") {
     "-DGRALLOC_GBM_SUPPORT",
     "-Wno-macro-redefined",
   ]
-  deps = [
-    "//third_party/libdrm:libdrm",
-    "//utils/native/base:utils",
-  ]
+  deps = [ "//third_party/libdrm:libdrm" ]
 
-  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  external_deps = [
+    "c_utils:utils",
+    "hiviewdfx_hilog_native:libhilog",
+  ]
 
   install_enable = true
   install_images = [ chipset_base_dir ]
@@ -64,7 +64,7 @@ ohos_shared_library("display_gfx") {
     "//drivers/peripheral/base",
     "//drivers/framework/include/utils",
     "//drivers/adapter/uhdf2/adapter/osal/include/",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//device/soc/allwinner/t507/hardware/rga/include/",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
@@ -74,10 +74,12 @@ ohos_shared_library("display_gfx") {
   deps = [
     ":display_gralloc",
     "//device/soc/allwinner/t507/hardware/rga:librga",
-    "//utils/native/base:utils",
   ]
 
-  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  external_deps = [
+    "c_utils:utils",
+    "hiviewdfx_hilog_native:libhilog",
+  ]
 
   install_enable = true
   install_images = [ chipset_base_dir ]
@@ -110,7 +112,7 @@ ohos_shared_library("display_device") {
     "//drivers/peripheral/base",
     "//drivers/framework/include/utils",
     "//drivers/adapter/uhdf2/osal/include",
-    "//utils/native/base/include",
+    "//commonlibrary/c_utils/base/include",
     "//foundation/graphic/standard/utils/include",
     "//foundation/graphic/standard/prebuilts/librarys/drm/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
@@ -118,14 +120,16 @@ ohos_shared_library("display_device") {
   deps = [
     ":display_gralloc",
     "//third_party/libdrm:libdrm",
-    "//utils/native/base:utils",
   ]
   cflags_cc = [
     "-Wno-error=unused-function",
     "-Wno-error=missing-braces",
     "-Wno-error=#warnings",
   ]
-  external_deps = [ "hiviewdfx_hilog_native:libhilog" ]
+  external_deps = [
+    "c_utils:utils",
+    "hiviewdfx_hilog_native:libhilog",
+  ]
 
   install_enable = true
   install_images = [ chipset_base_dir ]
