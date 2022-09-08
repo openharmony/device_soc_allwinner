@@ -37,6 +37,13 @@ ohos_shared_library("display_gralloc") {
     "//foundation/graphic/standard/utils/include",
     "//foundation/graphic/standard/prebuilts/librarys/drm/include",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
+    "//drivers/hdf_core/framework/include/utils",
+
+    "//drivers/hdf_core/adapter/uhdf2/osal/include",
+    "//drivers/hdf_core/adapter/uhdf/posix/include",
+    "//drivers/hdf_core/adapter/khdf/linux/osal/include",
+    "//drivers/hdf_core/adapter/khdf/liteos_m/osal/include",
+    "//drivers/hdf_core/adapter/khdf/liteos/osal/include",
   ]
   output_name = "display_gralloc"
   cflags = [
@@ -68,6 +75,7 @@ ohos_shared_library("display_gfx") {
     "//foundation/graphic/standard/utils/include",
     "//device/soc/allwinner/t507/hardware/rga/include/",
     "//base/hiviewdfx/interfaces/innerkits/libhilog/include",
+    "//device/soc/allwinner/t507/hardware/display/src/display_gralloc",
   ]
   output_name = "display_gfx"
   cflags = [ "-Wno-macro-redefined" ]

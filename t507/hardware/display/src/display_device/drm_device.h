@@ -55,7 +55,7 @@ public:
     std::shared_ptr<DrmConnector> GetDrmConnectorFromId(uint32_t id);
     std::shared_ptr<DrmCrtc> GetDrmCrtcFromId(uint32_t id);
     void CreateCrtc(drmModeCrtcPtr c);
-    virtual std::unordered_map<uint32_t, std::shared_ptr<HdiDisplay>> DiscoveryDisplay();
+    std::unordered_map<uint32_t, std::shared_ptr<HdiDisplay>> DiscoveryDisplay() override;
     int32_t Init() override;
     void DeInit() override;
 

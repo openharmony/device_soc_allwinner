@@ -18,11 +18,8 @@
 
 #ifndef RGA_DRIVER_H
 #define RGA_DRIVER_H
-
-#ifdef __cplusplus
-
 #include <stdint.h>
-
+#ifdef __cplusplus
 extern "C"
 {
 #endif
