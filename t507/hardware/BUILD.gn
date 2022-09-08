@@ -16,9 +16,9 @@ import("//build/ohos.gni")
 group("hardware_group") {
   deps = [
     "//device/soc/allwinner/t507/hardware/codec:codec",
-    "//device/soc/allwinner/t507/hardware/gpu:mesa-gpu",
-    "//device/soc/allwinner/t507/hardware/wifi:xr829",
     "//device/soc/allwinner/t507/hardware/display:display_group",
     "//device/soc/allwinner/t507/hardware/display:display_layer",
+    "//device/soc/allwinner/t507/hardware/gpu:mesa-gpu",
+    "//device/soc/allwinner/t507/hardware/wifi:xr829",
   ]
 }
