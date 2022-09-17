@@ -30,7 +30,7 @@ namespace DISPLAY {
 class AtomicReqPtr {
 public:
     explicit AtomicReqPtr(drmModeAtomicReqPtr ptr) : mPtr(ptr) {}
-    ~AtomicReqPtr() override;
+    virtual ~AtomicReqPtr()
     {
         if (mPtr != nullptr)
             drmModeAtomicFree(mPtr);

@@ -360,8 +360,8 @@ int32_t GbmAllocMem(const AllocInfo *info, BufferHandle **buffer)
 
     InitBufferHandle(bo, fd, info, priBuffer);
     priBuffer->id = global_id++;
-    DISPLAY_LOGD("alloc mem width %{public}d, heigt %{public}d,
-        drmformat %{public}d, format %{public}d buffer id:%{public}llu",
+    DISPLAY_LOGD(
+        "alloc mem width %{public}d, heigt %{public}d, drmformat %{public}d, format %{public}d buffer id:%{public}llu",
         info->width, info->height, drmFmt, info->format, priBuffer->id);
 
     priBuffer->hdl.phyAddr = 0;
