@@ -20,28 +20,28 @@ if (linux_kernel_version == "linux-4.19") {
   ohos_prebuilt_etc("boot_xr829_bin") {
     source = "$XR829_BIN_DIR/boot_xr829.bin"
     module_install_dir = "etc/firmware"
-    install_images = [ "vendor" ]
+    install_images = [ chipset_base_dir ]
     part_name = "allwinner_products"
   }
 
   ohos_prebuilt_etc("etf_xr829_bin") {
     source = "$XR829_BIN_DIR/etf_xr829.bin"
     module_install_dir = "etc/firmware"
-    install_images = [ "vendor" ]
+    install_images = [ chipset_base_dir ]
     part_name = "allwinner_products"
   }
 
   ohos_prebuilt_etc("fw_xr829_bin") {
     source = "$XR829_BIN_DIR/fw_xr829.bin"
     module_install_dir = "etc/firmware"
-    install_images = [ "vendor" ]
+    install_images = [ chipset_base_dir ]
     part_name = "allwinner_products"
   }
 
   ohos_prebuilt_etc("sdd_xr829_bin") {
     source = "$XR829_BIN_DIR/sdd_xr829.bin"
     module_install_dir = "etc/firmware"
-    install_images = [ "vendor" ]
+    install_images = [ chipset_base_dir ]
     part_name = "allwinner_products"
   }
 } else if (linux_kernel_version == "linux-5.10") {
@@ -76,14 +76,14 @@ if (linux_kernel_version == "linux-4.19") {
 
 ohos_prebuilt_etc("wpa_supplicant.conf") {
   source = "$XR829_ETC_DIR/wpa_supplicant.conf"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   module_install_dir = "misc/wifi/wpa_supplicant"
   part_name = "allwinner_products"
 }
 
 ohos_prebuilt_etc("p2p_supplicant.conf") {
   source = "$XR829_ETC_DIR/p2p_supplicant.conf"
-  install_images = [ "vendor" ]
+  install_images = [ chipset_base_dir ]
   module_install_dir = "misc/wifi/wpa_supplicant"
   part_name = "allwinner_products"
 }
