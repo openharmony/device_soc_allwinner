@@ -1,0 +1,123 @@
+diff --git a/adapter/khdf/linux/model/audio/Kconfig b/adapter/khdf/linux/model/audio/Kconfig
+index 224afcc5..c42d11fc 100644
+--- a/adapter/khdf/linux/model/audio/Kconfig
++++ b/adapter/khdf/linux/model/audio/Kconfig
+@@ -50,6 +50,13 @@ config DRIVERS_HDF_AUDIO_CAP_REPORT
+     help
+         Answer Y to choice capture event report.
+ 
++config DRIVERS_HDF_AUDIO_T507
++    bool "Enable HDF Audio Codec driver for T507"
++    default n
++    depends on DRIVERS_HDF_AUDIO
++    help
++        Answer Y to choice HDF Audio Codec driver.
++
+ config DRIVERS_HDF_AUDIO_TEST
+     bool "Enable HDF Audio driver Test"
+     default n
+diff --git a/adapter/khdf/linux/model/audio/Makefile b/adapter/khdf/linux/model/audio/Makefile
+index 875b1681..c1ed5524 100644
+--- a/adapter/khdf/linux/model/audio/Makefile
++++ b/adapter/khdf/linux/model/audio/Makefile
+@@ -20,6 +20,8 @@ KHDF_AUDIO_IMX8MM_DIR = $(KHDF_AUDIO_BASE_ROOT_DIR)/device/board/osware/$(DEVICE
+ KHDF_AUDIO_IMX8MM_INC_DIR = drivers/hdf/framework/../../../device/board/osware/$(DEVICE_NAME)/drivers/audio
+ KHDF_AUDIO_A311D_DIR = $(KHDF_AUDIO_BASE_ROOT_DIR)/device/board/unionman/$(DEVICE_NAME)/kernel/hdf/audio
+ KHDF_AUDIO_A311D_INC_DIR = drivers/hdf/framework/../../../device/board/unionman/$(DEVICE_NAME)/kernel/hdf/audio
++KHDF_AUDIO_T507_DIR = $(KHDF_AUDIO_BASE_ROOT_DIR)/device/board/$(PRODUCT_COMPANY)/$(DEVICE_NAME)/kernel/hdf/driver/audio
++KHDF_AUDIO_T507_INC_DIR = drivers/hdf/framework/../../../device/board/$(PRODUCT_COMPANY)/$(DEVICE_NAME)/kernel/hdf/driver/audio
+ 
+ audio_hdmi_codec-objs := \
+           $(KHDF_AUDIO_ROOT_DIR)/hdmi/src/audio_hdmi_codec_adapter.o \
+@@ -70,6 +72,18 @@ obj-$(CONFIG_DRIVERS_HDF_AUDIO_A311D) += \
+           $(KHDF_AUDIO_A311D_DIR)/linux_drv/src/axg_snd_card.o \
+           $(KHDF_AUDIO_A311D_DIR)/linux_drv/src/nau8540.o
+ 
++obj-$(CONFIG_DRIVERS_HDF_AUDIO_T507) += \
++          $(KHDF_AUDIO_T507_DIR)/codec/t507/src/t507_codec_adapter.o \
++          $(KHDF_AUDIO_T507_DIR)/codec/t507/src/t507_codec_impl_linux.o \
++          $(KHDF_AUDIO_T507_DIR)/codec/t507/src/t507_codec_ops.o \
++          $(KHDF_AUDIO_T507_DIR)/dai/src/t507_dai_ahub_adapter.o \
++          $(KHDF_AUDIO_T507_DIR)/dai/src/t507_dai_ahub_impl_linux.o \
++          $(KHDF_AUDIO_T507_DIR)/dai/src/t507_dai_ahub_ops.o \
++          $(KHDF_AUDIO_T507_DIR)/dsp/src/dsp_adapter.o \
++          $(KHDF_AUDIO_T507_DIR)/dsp/src/dsp_ops.o \
++          $(KHDF_AUDIO_T507_DIR)/soc/src/t507_dma_adapter.o \
++          $(KHDF_AUDIO_T507_DIR)/soc/src/t507_dma_ops.o
++
+ obj-$(CONFIG_DRIVERS_HDF_AUDIO_IMX8MM) += \
+           $(KHDF_AUDIO_IMX8MM_DIR)/soc/src/sai_driver.o \
+           $(KHDF_AUDIO_IMX8MM_DIR)/soc/src/dma_driver.o \
+@@ -110,3 +124,9 @@ ccflags-$(CONFIG_DRIVERS_HDF_AUDIO_IMX8MM) += \
+              -I$(srctree)/$(KHDF_AUDIO_IMX8MM_INC_DIR)/soc/include \
+              -I$(srctree)/$(KHDF_AUDIO_IMX8MM_INC_DIR)/dsp/include \
+              -I$(srctree)/$(KHDF_AUDIO_IMX8MM_INC_DIR)/include
++
++ccflags-$(CONFIG_DRIVERS_HDF_AUDIO_T507) += \
++             -I$(srctree)/$(KHDF_AUDIO_T507_INC_DIR)/codec/t507/include \
++             -I$(srctree)/$(KHDF_AUDIO_T507_INC_DIR)/dai/include \
++             -I$(srctree)/$(KHDF_AUDIO_T507_INC_DIR)/dsp/include \
++             -I$(srctree)/$(KHDF_AUDIO_T507_INC_DIR)/soc/include
+diff --git a/framework/core/manager/src/devsvc_manager.c b/framework/core/manager/src/devsvc_manager.c
+index ef339e39..2a1b6700 100644
+--- a/framework/core/manager/src/devsvc_manager.c
++++ b/framework/core/manager/src/devsvc_manager.c
+@@ -299,7 +299,8 @@ int DevSvcManagerListServiceByInterfaceDesc(
+             interfaceDesc, serviceNum);
+         return HDF_FAILURE;
+     }
+-    for (uint32_t i = 0; i < serviceNum; i++) {
++    uint32_t i;
++    for (i = 0; i < serviceNum; i++) {
+         HdfSbufWriteString(reply, serviceNames[i]);
+     }
+     return status;
+diff --git a/framework/model/input/driver/touchscreen/touch_gt911.c b/framework/model/input/driver/touchscreen/touch_gt911.c
+index f2ab20be..a8305d5b 100644
+--- a/framework/model/input/driver/touchscreen/touch_gt911.c
++++ b/framework/model/input/driver/touchscreen/touch_gt911.c
+@@ -117,6 +117,11 @@ static void ParsePointData(ChipDevice *device, FrameData *frame, uint8_t *buf, u
+                                   ((buf[GT_POINT_SIZE * i + GT_X_HIGH] & ONE_BYTE_MASK) << ONE_BYTE_OFFSET);
+             frame->fingers[i].y = (buf[GT_POINT_SIZE * i + GT_Y_LOW] & ONE_BYTE_MASK) |
+                                   ((buf[GT_POINT_SIZE * i + GT_Y_HIGH] & ONE_BYTE_MASK) << ONE_BYTE_OFFSET);
++#elif defined(CONFIG_ARCH_SUN50IW9)
++            frame->fingers[i].x = (buf[GT_POINT_SIZE * i + GT_X_LOW] & ONE_BYTE_MASK) |
++                                  ((buf[GT_POINT_SIZE * i + GT_X_HIGH] & ONE_BYTE_MASK) << ONE_BYTE_OFFSET);
++            frame->fingers[i].y = (buf[GT_POINT_SIZE * i + GT_Y_LOW] & ONE_BYTE_MASK) |
++                                  ((buf[GT_POINT_SIZE * i + GT_Y_HIGH] & ONE_BYTE_MASK) << ONE_BYTE_OFFSET);
+ #else
+             frame->fingers[i].y = (buf[GT_POINT_SIZE * i + GT_X_LOW] & ONE_BYTE_MASK) |
+                                   ((buf[GT_POINT_SIZE * i + GT_X_HIGH] & ONE_BYTE_MASK) << ONE_BYTE_OFFSET);
+diff --git a/framework/model/input/driver/touchscreen/touch_gt911.h b/framework/model/input/driver/touchscreen/touch_gt911.h
+index 79246b73..ca824980 100644
+--- a/framework/model/input/driver/touchscreen/touch_gt911.h
++++ b/framework/model/input/driver/touchscreen/touch_gt911.h
+@@ -79,6 +79,28 @@ uint8_t firmWareParm[FIRMWARE_LEN] = {
+     0x22, 0x03, 0x00, 0x00, 0x33, 0x00, 0x0F, 0x00, 0x00, 0x28,
+     0x50, 0x3C, 0x50, 0x00, 0x00, 0x05, 0x5F, 0xEB, 0x01
+ };
++#elif defined(CONFIG_ARCH_SUN50IW9)
++uint8_t firmWareParm[FIRMWARE_LEN] = {
++0x80,0x47,0x45,0x20,0x03,0x00,0x05,0x05,0x35,0x00,0x01,0xC8,
++        0x1E,0x0F,0x50,0x32,0x03,0x05,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x04,0x18,0x1A,0x1E,0x14,0x8C,0x2E,0x0E,
++        0x1E,0x20,0xEB,0x04,0x00,0x00,0x00,0xBA,0x02,0x2D,
++        0x00,0x00,0x00,0x00,0x00,0x03,0x00,0x00,0x00,0x00,
++        0x00,0x0F,0x2D,0x94,0xD5,0x02,0x07,0x00,0x00,0x04,
++        0xE6,0x10,0x00,0xBB,0x14,0x00,0x92,0x1A,0x00,0x78,
++        0x20,0x00,0x61,0x28,0x00,0x61,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x1C,0x1A,0x18,0x16,0x14,0x12,0x10,0x0E,
++        0x0C,0x0A,0x08,0x06,0x04,0x02,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x2A,0x29,0x28,0x26,0x24,0x22,0x21,0x20,
++        0x1F,0x1E,0x1D,0x1C,0x18,0x16,0x00,0x02,0x04,0x06,
++        0x08,0x0A,0x0C,0x0F,0x10,0x12,0x13,0x14,0x00,0x00,
++        0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
++        0x00,0x00,0x00,0x00,0xCB,0x01
++};
+ #else
+ uint8_t firmWareParm[FIRMWARE_LEN] = {
+     0x80, 0x47, 0x45, 0xC0, 0x03, 0xE0, 0x01, 0x05, 0x3D, 0x00, 0x01, 0x08, 0x28, 0x0F,

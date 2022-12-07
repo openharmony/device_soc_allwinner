@@ -94,12 +94,7 @@ int32_t DrmDisplay::GetDisplayPowerStatus(DispPowerStatus *status)
 
 int32_t DrmDisplay::SetDisplayPowerStatus(DispPowerStatus status)
 {
-    DISPLAY_LOGD("the status %{public}d ", status);
-    uint32_t drmPowerState = 0;
-    int ret = ConvertToDrmPowerState(status, drmPowerState);
-    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_PARAM_ERR,
-        DISPLAY_LOGE("unknown power status %{public}d", status));
-    mConnector->SetDpmsState(drmPowerState);
+    DISPLAY_LOGD("add by lzq *** the status %{public}d ", status);
     return DISPLAY_SUCCESS;
 }
 
@@ -221,7 +216,7 @@ int32_t DrmDisplay::ChosePreferenceMode()
     ret = SetDisplayMode(modeId);
     // Push first frame to the drm, for that the vblank must init all the componet.
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("set display mode failed"));
-    return PushFirstFrame();
+    return DISPLAY_SUCCESS;
 }
 
 int32_t DrmDisplay::RegDisplayVBlankCallback(VBlankCallback cb, void *data)
