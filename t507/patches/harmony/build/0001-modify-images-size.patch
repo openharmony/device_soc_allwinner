@@ -1,0 +1,33 @@
+diff --git a/ohos/images/mkimage/system_image_conf.txt b/ohos/images/mkimage/system_image_conf.txt
+index e7ead2a..7ee56a6 100644
+--- a/ohos/images/mkimage/system_image_conf.txt
++++ b/ohos/images/mkimage/system_image_conf.txt
+@@ -1,5 +1,5 @@
+ /
+-1610612224
++805306112
+ --fs_type=ext4
+ --dac_config ../../build/ohos/images/mkimage/dac.txt
+ --file_context obj/base/security/selinux/file_contexts.bin
+diff --git a/ohos/images/mkimage/userdata_image_conf.txt b/ohos/images/mkimage/userdata_image_conf.txt
+index 65ba776..7ff4d48 100644
+--- a/ohos/images/mkimage/userdata_image_conf.txt
++++ b/ohos/images/mkimage/userdata_image_conf.txt
+@@ -1,5 +1,5 @@
+ /data
+-1468006400
++367001600
+ --fs_type=f2fs
+ --dac_config ../../build/ohos/images/mkimage/dac.txt
+ --file_context obj/base/security/selinux/file_contexts.bin
+diff --git a/ohos/images/mkimage/vendor_image_conf.txt b/ohos/images/mkimage/vendor_image_conf.txt
+index 928aa91..4e5b74d 100644
+--- a/ohos/images/mkimage/vendor_image_conf.txt
++++ b/ohos/images/mkimage/vendor_image_conf.txt
+@@ -1,5 +1,5 @@
+ /vendor
+-268434944
++134217472
+ --fs_type=ext4
+ --dac_config ../../build/ohos/images/mkimage/dac.txt
+ --file_context obj/base/security/selinux/file_contexts.bin

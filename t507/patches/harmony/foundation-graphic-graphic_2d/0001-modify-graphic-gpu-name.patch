@@ -1,0 +1,32 @@
+diff --git a/frameworks/opengl_wrapper/src/EGL/egl_wrapper_loader.cpp b/frameworks/opengl_wrapper/src/EGL/egl_wrapper_loader.cpp
+index 1d3c8670..c15b677c 100644
+--- a/frameworks/opengl_wrapper/src/EGL/egl_wrapper_loader.cpp
++++ b/frameworks/opengl_wrapper/src/EGL/egl_wrapper_loader.cpp
+@@ -33,10 +33,10 @@ namespace {
+     constexpr const char *VENDOR_LIB_PATH = "/vendor/lib/chipsetsdk/";
+     constexpr const char *SYSTEM_LIB_PATH = "/system/lib/";
+ #endif
+-constexpr const char *LIB_EGL_NAME = "libEGL_impl.so";
+-constexpr const char *LIB_GLESV1_NAME = "libGLESv1_impl.so";
+-constexpr const char *LIB_GLESV2_NAME = "libGLESv2_impl.so";
+-constexpr const char *LIB_GLESV3_NAME = "libGLESv3_impl.so";
++constexpr const char *LIB_EGL_NAME = "libEGL.so.1.0.0";
++constexpr const char *LIB_GLESV1_NAME = "libGLESv1_CM.so.1.1.0";
++constexpr const char *LIB_GLESV2_NAME = "libGLESv2.so.2.0.0";
++constexpr const char *LIB_GLESV3_NAME = "libGLESv2.so.2.0.0";
+ }
+ 
+ EglWrapperLoader& EglWrapperLoader::GetInstance()
+diff --git a/rosen/modules/render_service/core/pipeline/rs_render_engine.cpp b/rosen/modules/render_service/core/pipeline/rs_render_engine.cpp
+index 6f309255..b1fd7253 100644
+--- a/rosen/modules/render_service/core/pipeline/rs_render_engine.cpp
++++ b/rosen/modules/render_service/core/pipeline/rs_render_engine.cpp
+@@ -111,6 +111,8 @@ void RSRenderEngine::DrawWithParams(RSPaintFilterCanvas& canvas, BufferDrawParam
+         preProcess(canvas, params);
+     }
+ 
++    RS_LOGE("USE_CPU: %d!", params.useCPU);
++    params.useCPU = true;
+     if (params.useCPU) {
+         RSBaseRenderEngine::DrawBuffer(canvas, params);
+     } else {

@@ -51,9 +51,15 @@ int32_t HdiDrmComposition::SetLayers(std::vector<HdiLayer *> &layers, HdiLayer &
     mCompLayers.clear();
     // TMP OHOS station support all layer
     for (auto &layer : layers) {
+#if 0
+        layer->SetDeviceSelect(COMPOSITION_DEVICE);
+        mCompLayers.push_back(layer);
+    }
+#else
         layer->SetDeviceSelect(COMPOSITION_CLIENT);
     }
     mCompLayers.push_back(&clientLayer);
+#endif
     return DISPLAY_SUCCESS;
 }
 
@@ -94,7 +100,7 @@ int32_t HdiDrmComposition::ApplyPlane(HdiDrmLayer &layer, DrmPlane &drmPlane, dr
 int32_t HdiDrmComposition::UpdateMode(std::unique_ptr<DrmModeBlock> &modeBlock, drmModeAtomicReq &pset)
 {
     // set the mode
-    DISPLAY_LOGD();
+    DISPLAY_LOGD("NeedModeSet: %{public}d", mCrtc->NeedModeSet());
     if (mCrtc->NeedModeSet()) {
         modeBlock = mConnector->GetModeBlockFromId(mCrtc->GetActiveModeId());
         if ((modeBlock != nullptr) && (modeBlock->GetBlockId() != DRM_INVALID_ID)) {
@@ -107,7 +113,7 @@ int32_t HdiDrmComposition::UpdateMode(std::unique_ptr<DrmModeBlock> &modeBlock, 
             // set the mode id
             DISPLAY_LOGD("set the mode");
             ret = drmModeAtomicAddProperty(&pset, mCrtc->GetId(), mCrtc->GetModePropId(), modeBlock->GetBlockId());
-            DISPLAY_LOGD("set the mode planeId %{public}d, propId %{public}d, GetBlockId: %{public}d", mCrtc->GetId(),
+            DISPLAY_LOGD("set the mode CrtcId %{public}d, propId %{public}d, GetBlockId: %{public}d", mCrtc->GetId(),
                 mCrtc->GetModePropId(), modeBlock->GetBlockId());
             DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE,
                 DISPLAY_LOGE("can not add the mode prop errno %{public}d", errno));
@@ -116,6 +122,7 @@ int32_t HdiDrmComposition::UpdateMode(std::unique_ptr<DrmModeBlock> &modeBlock, 
                 mConnector->GetPropCrtcId(), mCrtc->GetId());
             DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE,
                 DISPLAY_LOGE("can not add the crtc id prop %{public}d", errno));
+            mCrtc->ClearModeSet();
         }
     }
     return DISPLAY_SUCCESS;
@@ -146,8 +153,20 @@ int32_t HdiDrmComposition::Apply(bool modeSet)
     DISPLAY_LOGD("mCompLayers size %{public}zd", mCompLayers.size());
     for (uint32_t i = 0; i < mCompLayers.size(); i++) {
         HdiDrmLayer *layer = static_cast<HdiDrmLayer *>(mCompLayers[i]);
+#if 1
         auto &drmPlane = mPlanes[i];
+        DISPLAY_LOGD("Use plane %{public}d Type %{public}x crtc %{public}d PlaneMask %{public}x",
+            drmPlane->GetId(), drmPlane->GetType(), mCrtc->GetId(), mCrtc->GetPipe());
         ret = ApplyPlane(*layer, *drmPlane, atomicReqPtr.Get());
+#else
+        if (i < 4) { // CompLayers layer less than 4
+            auto &drmPlane = mPlanes[i*4];
+            ret = ApplyPlane(*layer, *drmPlane, atomicReqPtr.Get());
+        } else {
+            auto &drmPlane = mPlanes[11+i];
+            ret = ApplyPlane(*layer, *drmPlane, atomicReqPtr.Get());
+        }
+#endif
         if (ret != DISPLAY_SUCCESS) {
             DISPLAY_LOGE("apply plane failed");
             break;

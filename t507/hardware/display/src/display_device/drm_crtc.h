@@ -69,6 +69,10 @@ public:
         return mNeedModeSet;
     }
 
+    void ClearModeSet()
+    {
+        mNeedModeSet = false;
+    }
 private:
     uint32_t mId = 0;
     uint32_t mModePropId = 0;

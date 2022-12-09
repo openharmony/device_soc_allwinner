@@ -13,76 +13,52 @@
 import("//build/ohos.gni")
 import("//build/ohos/kernel/kernel.gni")
 
-XR829_ETC_DIR = "//device/soc/allwinner/t507/hardware/wifi/xr829/etc"
-XR829_BIN_DIR = "//device/soc/allwinner/t507/hardware/wifi/xr829/bin"
+AP6212_BIN_DIR = "//device/soc/allwinner/t507/hardware/wifi/ap6212"
 
-if (linux_kernel_version == "linux-4.19") {
-  ohos_prebuilt_etc("boot_xr829_bin") {
-    source = "$XR829_BIN_DIR/boot_xr829.bin"
-    module_install_dir = "etc/firmware"
-    install_images = [ chipset_base_dir ]
-    part_name = "allwinner_products"
-  }
+ohos_prebuilt_etc("fw_bcm43438a0_bin") {
+  source = "$AP6212_BIN_DIR/fw_bcm43438a1.bin"
+  module_install_dir = "etc/firmware"
+  install_images = [ "vendor" ]
+  part_name = "allwinner_products"
+}
 
-  ohos_prebuilt_etc("etf_xr829_bin") {
-    source = "$XR829_BIN_DIR/etf_xr829.bin"
-    module_install_dir = "etc/firmware"
-    install_images = [ chipset_base_dir ]
-    part_name = "allwinner_products"
-  }
+ohos_prebuilt_etc("fw_bcm43438a0_apsta_bin") {
+  source = "$AP6212_BIN_DIR/fw_bcm43438a1_apsta.bin"
+  module_install_dir = "etc/firmware"
+  install_images = [ "vendor" ]
+  part_name = "allwinner_products"
+}
 
-  ohos_prebuilt_etc("fw_xr829_bin") {
-    source = "$XR829_BIN_DIR/fw_xr829.bin"
-    module_install_dir = "etc/firmware"
-    install_images = [ chipset_base_dir ]
-    part_name = "allwinner_products"
-  }
+ohos_prebuilt_etc("fw_bcm43438a0_p2p_bin") {
+  source = "$AP6212_BIN_DIR/fw_bcm43438a1_p2p.bin"
+  module_install_dir = "etc/firmware"
+  install_images = [ "vendor" ]
+  part_name = "allwinner_products"
+}
 
-  ohos_prebuilt_etc("sdd_xr829_bin") {
-    source = "$XR829_BIN_DIR/sdd_xr829.bin"
-    module_install_dir = "etc/firmware"
-    install_images = [ chipset_base_dir ]
-    part_name = "allwinner_products"
-  }
-} else if (linux_kernel_version == "linux-5.10") {
-  ohos_prebuilt_etc("boot_xr829_bin") {
-    source = "$XR829_BIN_DIR/boot_xr829.bin"
-    module_install_dir = "lib/firmware"
-    install_images = [ "system" ]
-    part_name = "allwinner_products"
-  }
+ohos_prebuilt_etc("nvram_txt") {
+  source = "$AP6212_BIN_DIR/nvram.txt"
+  module_install_dir = "etc/firmware"
+  install_images = [ "vendor" ]
+  part_name = "allwinner_products"
+}
 
-  ohos_prebuilt_etc("etf_xr829_bin") {
-    source = "$XR829_BIN_DIR/etf_xr829.bin"
-    module_install_dir = "lib/firmware"
-    install_images = [ "system" ]
-    part_name = "allwinner_products"
-  }
-
-  ohos_prebuilt_etc("fw_xr829_bin") {
-    source = "$XR829_BIN_DIR/fw_xr829.bin"
-    module_install_dir = "lib/firmware"
-    install_images = [ "system" ]
-    part_name = "allwinner_products"
-  }
-
-  ohos_prebuilt_etc("sdd_xr829_bin") {
-    source = "$XR829_BIN_DIR/sdd_xr829.bin"
-    module_install_dir = "lib/firmware"
-    install_images = [ "system" ]
-    part_name = "allwinner_products"
-  }
+ohos_prebuilt_etc("config_txt") {
+  source = "$AP6212_BIN_DIR/config.txt"
+  module_install_dir = "etc/firmware"
+  install_images = [ "vendor" ]
+  part_name = "allwinner_products"
 }
 
 ohos_prebuilt_etc("wpa_supplicant.conf") {
-  source = "$XR829_ETC_DIR/wpa_supplicant.conf"
+  source = "$AP6212_BIN_DIR/wpa_supplicant.conf"
   install_images = [ chipset_base_dir ]
   module_install_dir = "misc/wifi/wpa_supplicant"
   part_name = "allwinner_products"
 }
 
 ohos_prebuilt_etc("p2p_supplicant.conf") {
-  source = "$XR829_ETC_DIR/p2p_supplicant.conf"
+  source = "$AP6212_BIN_DIR/p2p_supplicant.conf"
   install_images = [ chipset_base_dir ]
   module_install_dir = "misc/wifi/wpa_supplicant"
   part_name = "allwinner_products"
@@ -90,11 +66,12 @@ ohos_prebuilt_etc("p2p_supplicant.conf") {
 
 group("xr829") {
   deps = [
-    ":boot_xr829_bin",
-    ":etf_xr829_bin",
-    ":fw_xr829_bin",
+    ":config_txt",
+    ":fw_bcm43438a0_apsta_bin",
+    ":fw_bcm43438a0_bin",
+    ":fw_bcm43438a0_p2p_bin",
+    ":nvram_txt",
     ":p2p_supplicant.conf",
-    ":sdd_xr829_bin",
     ":wpa_supplicant.conf",
   ]
 }
